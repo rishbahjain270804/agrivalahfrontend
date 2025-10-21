@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Influencer Dashboard - Cyano Veda</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .navbar-custom {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-card {
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+      height: 100%;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .stat-icon {
+      font-size: 2.5rem;
+      opacity: 0.8;
+    }
+
+    .profile-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .referral-code {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      color: white;
+      transition: all 0.3s;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.5);
+      color: white;
+    }
+
+    .status-badge {
+      padding: 6px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .table-responsive {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .refresh-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      transition: all 0.3s;
+    }
+
+    .refresh-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .stat-card {
+        margin-bottom: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar-custom">
+    <div class="container-fluid">
+      <div class="d-flex justify-content-between align-items-center w-100">
+        <div>
+          <h4 class="mb-0">
+            <i class="fas fa-leaf me-2"></i>Cyano Veda Influencer Portal
+          </h4>
+          <small id="lastUpdated" class="opacity-75"></small>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn refresh-btn btn-sm" id="refreshBtn" title="Refresh Data">
+            <i class="fas fa-sync-alt"></i> Refresh
+          </button>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="autoRefreshToggle" checked>
+            <label class="form-check-label small text-white" for="autoRefreshToggle">Auto-refresh</label>
+          </div>
+          <button class="btn btn-outline-light btn-sm" id="influencerLogoutBtn">
+            <i class="fas fa-sign-out-alt me-1"></i>Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid py-4">
+    <!-- Alert Container -->
+    <div id="alertContainer"></div>
+
+    <!-- Profile Section -->
+    <div class="row g-4 mb-4">
+      <div class="col-lg-4">
+        <div class="profile-card">
+          <div id="influencerProfile">
+            <div class="text-center">
+              <i class="fas fa-user-circle" style="font-size: 4rem;"></i>
+              <p class="mt-2">Loading profile...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics Cards -->
+      <div class="col-lg-8">
+        <div class="row g-3">
+          <div class="col-md-3 col-sm-6">
+            <div class="card stat-card">
+              <div class="card-body text-center">
+                <div class="stat-icon text-primary">
+                  <i class="fas fa-users"></i>
+                </div>
+                <h3 class="mb-0 mt-2" id="statTotalReferrals">0</h3>
+                <p class="text-muted mb-0">Total Referrals</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="card stat-card">
+              <div class="card-body text-center">
+                <div class="stat-icon text-success">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 class="mb-0 mt-2" id="statCompleted">0</h3>
+                <p class="text-muted mb-0">Completed</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="card stat-card">
+              <div class="card-body text-center">
+                <div class="stat-icon text-warning">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <h3 class="mb-0 mt-2" id="statPending">0</h3>
+                <p class="text-muted mb-0">Pending</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="card stat-card">
+              <div class="card-body text-center">
+                <div class="stat-icon text-info">
+                  <i class="fas fa-rupee-sign"></i>
+                </div>
+                <h3 class="mb-0 mt-2" id="statEarnings">₹0</h3>
+                <p class="text-muted mb-0">Total Earnings</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="card mt-3">
+          <div class="card-body">
+            <div class="row text-center">
+              <div class="col-4">
+                <h5 class="mb-0" id="statRevenue">₹0</h5>
+                <small class="text-muted">Revenue Generated</small>
+              </div>
+              <div class="col-4">
+                <h5 class="mb-0" id="statCommission">₹0</h5>
+                <small class="text-muted">Commission Earned</small>
+              </div>
+              <div class="col-4">
+                <h5 class="mb-0" id="statCouponUsage">0</h5>
+                <small class="text-muted">Coupon Usage</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Referral Codes Section -->
+    <div class="card mb-4">
+      <div class="card-header bg-white">
+        <h5 class="mb-0"><i class="fas fa-ticket-alt me-2"></i>Your Referral Codes</h5>
+      </div>
+      <div class="card-body">
+        <div id="influencerCoupons">
+          <div class="text-center text-muted">
+            <i class="fas fa-spinner fa-spin fa-2x mb-2"></i>
+            <p>Loading referral codes...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Referrals -->
+    <div class="card mb-4">
+      <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="fas fa-list me-2"></i>Recent Referrals</h5>
+        <button class="btn btn-sm btn-success" id="exportReferralsBtn">
+          <i class="fas fa-file-excel me-1"></i>Export
+        </button>
+      </div>
+      <div class="card-body">
+        <div id="influencerRecentRegistrations">
+          <div class="text-center text-muted">
+            <i class="fas fa-spinner fa-spin fa-2x mb-2"></i>
+            <p>Loading referrals...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Performance Chart (Placeholder) -->
+    <div class="card">
+      <div class="card-header bg-white">
+        <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Performance Overview</h5>
+      </div>
+      <div class="card-body">
+        <div id="influencerPerformance">
+          <div class="row">
+            <div class="col-md-6">
+              <h6>Registration Status Breakdown</h6>
+              <div id="statusBreakdown"></div>
+            </div>
+            <div class="col-md-6">
+              <h6>Payment Information</h6>
+              <div id="paymentInfo"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="js/influencer-dashboard.js"></script>
+</body>
+
+</html>

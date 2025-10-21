@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Become an Influencer - Cyano Veda Natural Farming</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .registration-container {
+      max-width: 800px;
+      margin: 40px auto;
+    }
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+    .card-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 15px 15px 0 0 !important;
+      padding: 30px;
+    }
+    .benefit-card {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-left: 4px solid #667eea;
+    }
+    .benefit-icon {
+      font-size: 2rem;
+      color: #667eea;
+      margin-bottom: 10px;
+    }
+    .form-label {
+      font-weight: 600;
+      color: #333;
+    }
+    .required-field::after {
+      content: " *";
+      color: #dc3545;
+    }
+    .btn-submit {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      padding: 12px 40px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    .info-section {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container registration-container">
+    <!-- Header -->
+    <div class="text-center text-white mb-4">
+      <h1 class="display-4 fw-bold mb-3">
+        <i class="fas fa-leaf me-2"></i>Become a Cyano Veda Influencer
+      </h1>
+      <p class="lead">Promote Natural Farming & Earn Rewards for Every Referral!</p>
+    </div>
+
+    <!-- Benefits Section -->
+    <div class="info-section">
+      <h3 class="mb-4"><i class="fas fa-star text-warning me-2"></i>Why Join Us?</h3>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="benefit-card">
+            <div class="benefit-icon"><i class="fas fa-rupee-sign"></i></div>
+            <h5>Earn Commission</h5>
+            <p class="mb-0">Get ₹50 commission for every successful farmer registration using your referral code</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="benefit-card">
+            <div class="benefit-icon"><i class="fas fa-chart-line"></i></div>
+            <h5>Track Performance</h5>
+            <p class="mb-0">Access your personal dashboard to monitor referrals, earnings, and performance metrics</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="benefit-card">
+            <div class="benefit-icon"><i class="fas fa-ticket-alt"></i></div>
+            <h5>Unique Referral Code</h5>
+            <p class="mb-0">Get your personalized coupon code to share with farmers in your network</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="benefit-card">
+            <div class="benefit-icon"><i class="fas fa-hand-holding-usd"></i></div>
+            <h5>Easy Payouts</h5>
+            <p class="mb-0">Receive payments directly to your UPI ID or bank account</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Registration Form -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="mb-0"><i class="fas fa-user-plus me-2"></i>Influencer Application Form</h3>
+        <p class="mb-0 mt-2 opacity-75">Fill in your details to apply as an influencer</p>
+      </div>
+      <div class="card-body p-4">
+        <form id="influencerRegistrationForm">
+          <!-- Personal Information -->
+          <h5 class="mb-3 text-primary"><i class="fas fa-user me-2"></i>Personal Information</h5>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label for="name" class="form-label required-field">Full Name</label>
+              <input type="text" class="form-control" id="name" required placeholder="Enter your full name">
+            </div>
+            <div class="col-md-6">
+              <label for="contact_number" class="form-label required-field">Contact Number</label>
+              <div class="input-group">
+                <input type="tel" class="form-control" id="contact_number" required pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number">
+                <button class="btn btn-outline-primary" type="button" id="sendOtpBtn">Send OTP</button>
+              </div>
+              <small class="text-muted">Must start with 6-9</small>
+            </div>
+            <div class="col-md-6" id="otpFieldContainer" style="display:none;">
+              <label for="otp" class="form-label required-field">Enter OTP</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="otp" maxlength="4" placeholder="4-digit OTP">
+                <button class="btn btn-outline-success" type="button" id="verifyOtpBtn">Verify</button>
+              </div>
+              <small class="text-muted" id="otpTimer"></small>
+            </div>
+            <div class="col-md-6">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" class="form-control" id="email" placeholder="your.email@example.com">
+              <small class="text-muted">For notifications (optional)</small>
+            </div>
+            <div class="col-md-6">
+              <label for="password" class="form-label required-field">Set Password</label>
+              <div class="input-group">
+                <input type="password" class="form-control" id="password" required minlength="6" placeholder="Minimum 6 characters">
+                <button class="btn btn-outline-secondary" type="button" id="togglePasswordReg">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+              <small class="text-muted">You'll use your mobile number and this password to login</small>
+            </div>
+            <div class="col-md-6">
+              <label for="confirm_password" class="form-label required-field">Confirm Password</label>
+              <input type="password" class="form-control" id="confirm_password" required minlength="6" placeholder="Re-enter password">
+            </div>
+            <div class="col-md-6">
+              <label for="type" class="form-label required-field">Influencer Type</label>
+              <select class="form-select" id="type" required>
+                <option value="">Select your type</option>
+                <option value="Farmer">Farmer</option>
+                <option value="NGO">NGO</option>
+                <option value="Youtuber">Youtuber / Content Creator</option>
+                <option value="Local Promoter">Local Promoter</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Location & Social -->
+          <h5 class="mb-3 text-primary"><i class="fas fa-map-marker-alt me-2"></i>Location & Social Presence</h5>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label for="region" class="form-label required-field">Region</label>
+              <input type="text" class="form-control" id="region" required placeholder="District, State">
+              <small class="text-muted">Your primary area of influence</small>
+            </div>
+            <div class="col-md-6">
+              <label for="social_link" class="form-label">Social Media Link</label>
+              <input type="url" class="form-control" id="social_link" placeholder="https://youtube.com/channel/...">
+              <small class="text-muted">YouTube, Facebook, Instagram, etc.</small>
+            </div>
+          </div>
+
+          <!-- Payment Information -->
+          <h5 class="mb-3 text-primary"><i class="fas fa-wallet me-2"></i>Payment Information</h5>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label for="upi_id" class="form-label required-field">UPI ID</label>
+              <input type="text" class="form-control" id="upi_id" required placeholder="yourname@upi">
+              <small class="text-muted">For commission payouts</small>
+            </div>
+            <div class="col-md-6">
+              <label for="bank_details" class="form-label">Bank Details (Optional)</label>
+              <textarea class="form-control" id="bank_details" rows="3" placeholder="Bank Name, Account Number, IFSC Code"></textarea>
+              <small class="text-muted">Alternative payment method</small>
+            </div>
+          </div>
+
+          <!-- Additional Information -->
+          <h5 class="mb-3 text-primary"><i class="fas fa-info-circle me-2"></i>Additional Information</h5>
+          <div class="mb-4">
+            <label for="notes" class="form-label">Why do you want to become an influencer?</label>
+            <textarea class="form-control" id="notes" rows="3" placeholder="Tell us about your interest in promoting natural farming..."></textarea>
+          </div>
+
+          <!-- Terms -->
+          <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" id="terms" required>
+            <label class="form-check-label" for="terms">
+              I agree to the <a href="#" target="_blank">Terms & Conditions</a> and understand that my application will be reviewed before approval
+            </label>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-submit">
+              <i class="fas fa-paper-plane me-2"></i>Submit Application
+            </button>
+          </div>
+        </form>
+
+        <!-- Message Display -->
+        <div id="influencerRegistrationMessage" class="mt-4"></div>
+      </div>
+    </div>
+
+    <!-- Already Registered -->
+    <div class="text-center mt-4">
+      <p class="text-white">
+        Already registered? <a href="/influencer/login" class="text-white fw-bold text-decoration-underline">Login to your dashboard</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/influencer-registration.js"></script>
+</body>
+</html>
