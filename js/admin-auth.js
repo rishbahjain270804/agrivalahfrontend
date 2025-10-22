@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     messageDiv.innerHTML = "<div class='alert alert-info'>Signing in...</div>";
 
     try {
-      const response = await fetch('/api/auth/login', {
+      const loginUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/auth/login') : '/api/auth/login';
+      const response = await fetch(loginUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

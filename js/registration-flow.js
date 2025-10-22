@@ -157,7 +157,12 @@
   }
 
   async function apiRequest(url, options = {}) {
-    const response = await fetch(url, options);
+    // Use config.js helper if available, otherwise construct full URL
+    const fullUrl = typeof getApiUrl === 'function' ? getApiUrl(url) : url;
+    const response = await fetch(fullUrl, {
+      ...options,
+      credentials: 'include'
+    });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
       const message = data && data.message ? data.message : 'Request failed';
@@ -359,7 +364,10 @@
 
     setStatusMessage(elements.couponStatus, 'Validating coupon...', 'muted');
     try {
-      const result = await fetch(`/api/validate-coupon?code=${encodeURIComponent(trimmed)}`).then((res) => res.json());
+      const couponUrl = typeof getApiUrl === 'function' 
+        ? getApiUrl(`/api/validate-coupon?code=${encodeURIComponent(trimmed)}`)
+        : `/api/validate-coupon?code=${encodeURIComponent(trimmed)}`;
+      const result = await fetch(couponUrl, { credentials: 'include' }).then((res) => res.json());
       if (result && result.valid) {
         state.couponCode = trimmed;
         const amount = result.amount || 250;

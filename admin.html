@@ -150,6 +150,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/config.js"></script>
     <script>
         let currentStats = {};
 
@@ -157,7 +158,8 @@
         async function loadDashboardData() {
             try {
                 // Load statistics
-                const statsResponse = await fetch('/api/dashboard-stats');
+                const statsUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/stats/dashboard') : '/api/stats/dashboard';
+                const statsResponse = await fetch(statsUrl, { credentials: 'include' });
                 const statsData = await statsResponse.json();
                 
                 if (statsData.success) {
@@ -200,9 +202,11 @@
             `;
 
             try {
-                const response = await fetch('/api/list-registrations', {
+                const listUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/list-registrations') : '/api/list-registrations';
+                const response = await fetch(listUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
                     body: JSON.stringify({ status: status, limit: 20 })
                 });
 
@@ -296,9 +300,11 @@
         // View registration details
         async function viewDetails(referenceId) {
             try {
-                const response = await fetch('/api/get-registration', {
+                const getUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/get-registration') : '/api/get-registration';
+                const response = await fetch(getUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
                     body: JSON.stringify({ reference_id: referenceId })
                 });
 
@@ -320,9 +326,11 @@
             if (!confirm(`Update status to "${newStatus}"?`)) return;
 
             try {
-                const response = await fetch('/api/update-status', {
+                const updateUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/update-status') : '/api/update-status';
+                const response = await fetch(updateUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
                     body: JSON.stringify({ 
                         reference_id: referenceId, 
                         status: newStatus,
@@ -348,7 +356,8 @@
             const container = document.getElementById('api-status');
             
             try {
-                const response = await fetch('/api/health');
+                const healthUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/health-check') : '/api/health-check';
+                const response = await fetch(healthUrl, { credentials: 'include' });
                 const data = await response.json();
                 
                 if (data.status === 'OK') {

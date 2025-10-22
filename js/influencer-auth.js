@@ -70,7 +70,8 @@ console.log('[Influencer Auth] Script loaded');
     showMessage('Signing in...', 'info');
 
     try {
-      const response = await fetch('/api/auth/influencer-login', {
+      const loginUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/auth/influencer-login') : '/api/auth/influencer-login';
+      const response = await fetch(loginUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
