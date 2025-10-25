@@ -101,7 +101,7 @@
       state.currentUser = data.user;
       return true;
     } catch (error) {
-      window.location.href = '/admin-login.html';
+      window.location.href = '/admin/login';
       return false;
     }
   };
@@ -1227,7 +1227,7 @@
       } catch (error) {
         console.warn('Logout error:', error);
       } finally {
-        window.location.href = '/admin-login.html';
+        window.location.href = '/admin/login';
       }
     });
 

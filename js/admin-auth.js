@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       messageDiv.innerHTML = "<div class='alert alert-success'>Login successful. Redirecting...</div>";
       setTimeout(() => {
-        window.location.href = '/admin-dashboard.html';
+        window.location.href = '/admin';
       }, 800);
     } catch (error) {
       messageDiv.innerHTML = `<div class='alert alert-danger'>${error.message}</div>`;
