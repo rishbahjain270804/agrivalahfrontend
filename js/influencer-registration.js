@@ -37,6 +37,122 @@ console.log('[Influencer Registration] Script loaded');
     messageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   };
 
+  // Show field-specific validation message
+  const showFieldMessage = (fieldId, message, type = 'error') => {
+    const field = document.getElementById(fieldId);
+    if (!field) return;
+
+    // Remove existing message
+    const existingMsg = field.parentElement.querySelector('.field-validation-message');
+    if (existingMsg) existingMsg.remove();
+
+    // Create new message
+    const msgDiv = document.createElement('div');
+    const colorClass = type === 'success' ? 'text-success' : type === 'info' ? 'text-info' : 'text-danger';
+    const icon = type === 'success' ? 'check-circle' : type === 'info' ? 'spinner fa-spin' : 'exclamation-circle';
+    
+    msgDiv.className = `field-validation-message mt-2 small ${colorClass}`;
+    msgDiv.innerHTML = `<i class="fas fa-${icon} me-1"></i>${message}`;
+    
+    // Insert after input group or input
+    const inputGroup = field.closest('.input-group');
+    if (inputGroup) {
+      inputGroup.parentElement.appendChild(msgDiv);
+    } else {
+      field.parentElement.appendChild(msgDiv);
+    }
+
+    // Add border color
+    field.classList.remove('border-success', 'border-danger', 'border-info');
+    if (type === 'success') {
+      field.classList.add('border-success');
+    } else if (type === 'error') {
+      field.classList.add('border-danger');
+    }
+  };
+
+  // Clear field message
+  const clearFieldMessage = (fieldId) => {
+    const field = document.getElementById(fieldId);
+    if (!field) return;
+
+    // Check in input group parent first
+    const inputGroup = field.closest('.input-group');
+    if (inputGroup && inputGroup.parentElement) {
+      const existingMsg = inputGroup.parentElement.querySelector('.field-validation-message');
+      if (existingMsg) existingMsg.remove();
+    }
+    
+    // Also check in direct parent
+    const existingMsg = field.parentElement.querySelector('.field-validation-message');
+    if (existingMsg) existingMsg.remove();
+
+    field.classList.remove('border-success', 'border-danger', 'border-info');
+  };
+
+  // Check if phone number already exists
+  const checkPhoneExists = async (phone) => {
+    try {
+      const checkUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/influencers/check-phone') : '/api/influencers/check-phone';
+      const res = await fetch(checkUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ phoneNumber: phone })
+      });
+
+      // If endpoint doesn't exist (404), skip validation
+      if (res.status === 404) {
+        console.warn('[Validation] Check-phone endpoint not available, skipping validation');
+        return false; // Assume available if endpoint doesn't exist
+      }
+
+      const result = await res.json();
+      return result.exists || false;
+    } catch (error) {
+      console.error('[Validation] Error checking phone:', error);
+      return false; // Assume available on error
+    }
+  };
+
+  // Check if UPI ID already exists
+  const checkUpiExists = async (upiId) => {
+    try {
+      const checkUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/influencers/check-upi') : '/api/influencers/check-upi';
+      const res = await fetch(checkUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ upiId: upiId })
+      });
+
+      // If endpoint doesn't exist (404), skip validation
+      if (res.status === 404) {
+        console.warn('[Validation] Check-upi endpoint not available, skipping validation');
+        return false; // Assume available if endpoint doesn't exist
+      }
+
+      const result = await res.json();
+      return result.exists || false;
+    } catch (error) {
+      console.error('[Validation] Error checking UPI:', error);
+      return false; // Assume available on error
+    }
+  };
+
+  // Debounce function
+  const debounce = (func, wait) => {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  };
+
   const validateForm = () => {
     const phone = document.getElementById('contact_number').value.trim();
     const phoneRegex = /^[6-9][0-9]{9}$/;
@@ -81,53 +197,89 @@ console.log('[Influencer Registration] Script loaded');
 
   // Send OTP
   const sendOtp = async () => {
+    console.log('[OTP] Send OTP button clicked');
     const phone = document.getElementById('contact_number').value.trim();
+    console.log('[OTP] Phone number:', phone);
+    
     const phoneRegex = /^[6-9][0-9]{9}$/;
     
     if (!phoneRegex.test(phone)) {
-      showMessage('Please enter a valid 10-digit mobile number', 'error');
+      console.log('[OTP] Invalid phone format');
+      showMessage('Please enter a valid 10-digit mobile number starting with 6-9', 'error');
       return;
     }
 
     const sendBtn = document.getElementById('sendOtpBtn');
+    if (!sendBtn) {
+      console.error('[OTP] Send button not found!');
+      return;
+    }
+    
     sendBtn.disabled = true;
-    sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
 
     try {
-      const res = await fetch('/api/auth/send-otp', {
+      const otpUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/otp/send') : '/api/otp/send';
+      console.log('[OTP] Sending request to:', otpUrl);
+      
+      const res = await fetch(otpUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contactNumber: phone })
+        credentials: 'include',
+        body: JSON.stringify({ phoneNumber: phone })
       });
 
+      console.log('[OTP] Response status:', res.status);
       const result = await res.json();
+      console.log('[OTP] Response data:', result);
 
       if (res.ok && result.success) {
-        showMessage('OTP sent to your mobile number', 'success');
+        showMessage('OTP sent successfully! Check your mobile.', 'success');
         otpSent = true;
-        document.getElementById('otpFieldContainer').style.display = 'block';
+        
+        // Show OTP field
+        const otpContainer = document.getElementById('otpFieldContainer');
+        if (otpContainer) {
+          otpContainer.classList.add('show');
+          otpContainer.style.display = 'block';
+        }
+        
         document.getElementById('contact_number').readOnly = true;
-        sendBtn.innerHTML = 'Resend OTP';
+        sendBtn.innerHTML = '<i class="fas fa-redo me-1"></i>Resend OTP';
+        
+        // Show test OTP if in development
+        if (result.testOtp) {
+          showMessage(`Test Mode: Your OTP is ${result.testOtp}`, 'info');
+          console.log('[OTP] Test OTP:', result.testOtp);
+        }
         
         // Start timer
-        let timeLeft = 120;
+        let timeLeft = result.expiresIn || 300;
         const timer = setInterval(() => {
           timeLeft--;
-          document.getElementById('otpTimer').textContent = `OTP valid for ${timeLeft}s`;
+          const otpTimer = document.getElementById('otpTimer');
+          if (otpTimer) {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            otpTimer.textContent = `OTP expires in ${minutes}:${seconds.toString().padStart(2, '0')}`;
+          }
           if (timeLeft <= 0) {
             clearInterval(timer);
             sendBtn.disabled = false;
           }
         }, 1000);
         
-        setTimeout(() => sendBtn.disabled = false, 120000);
+        setTimeout(() => {
+          sendBtn.disabled = false;
+        }, (result.cooldown || 60) * 1000);
       } else {
         throw new Error(result.message || 'Failed to send OTP');
       }
     } catch (error) {
+      console.error('[OTP] Error:', error);
       showMessage('Error: ' + error.message, 'error');
       sendBtn.disabled = false;
-      sendBtn.innerHTML = 'Send OTP';
+      sendBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i>Send OTP';
     }
   };
 
@@ -146,10 +298,12 @@ console.log('[Influencer Registration] Script loaded');
     verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
     try {
-      const res = await fetch('/api/auth/verify-otp', {
+      const verifyUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/otp/verify') : '/api/otp/verify';
+      const res = await fetch(verifyUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contactNumber: phone, otp })
+        credentials: 'include',
+        body: JSON.stringify({ phoneNumber: phone, otpCode: otp })
       });
 
       const result = await res.json();
@@ -173,8 +327,146 @@ console.log('[Influencer Registration] Script loaded');
   };
 
   // Attach OTP button listeners
-  document.getElementById('sendOtpBtn')?.addEventListener('click', sendOtp);
-  document.getElementById('verifyOtpBtn')?.addEventListener('click', verifyOtp);
+  const sendOtpButton = document.getElementById('sendOtpBtn');
+  const verifyOtpButton = document.getElementById('verifyOtpBtn');
+  
+  if (sendOtpButton) {
+    console.log('[Init] Send OTP button found, attaching listener');
+    sendOtpButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('[Init] Send OTP button clicked - calling sendOtp');
+      sendOtp();
+    });
+  } else {
+    console.error('[Init] Send OTP button NOT found!');
+  }
+  
+  if (verifyOtpButton) {
+    console.log('[Init] Verify OTP button found, attaching listener');
+    verifyOtpButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('[Init] Verify OTP button clicked - calling verifyOtp');
+      verifyOtp();
+    });
+  } else {
+    console.error('[Init] Verify OTP button NOT found!');
+  }
+
+  // Real-time validation for phone number
+  const phoneInput = document.getElementById('contact_number');
+  if (phoneInput) {
+    let isCheckingPhone = false;
+    
+    const validatePhone = async () => {
+      const phone = phoneInput.value.trim();
+      const phoneRegex = /^[6-9][0-9]{9}$/;
+      
+      // Clear any existing message first
+      clearFieldMessage('contact_number');
+      
+      if (!phone) {
+        return;
+      }
+      
+      if (!phoneRegex.test(phone)) {
+        showFieldMessage('contact_number', 'Please enter a valid 10-digit mobile number starting with 6-9', 'error');
+        return;
+      }
+
+      // Prevent multiple simultaneous checks
+      if (isCheckingPhone) return;
+      isCheckingPhone = true;
+
+      // Show checking message with spinner
+      showFieldMessage('contact_number', 'Checking availability...', 'info');
+      
+      try {
+        // Check if phone already exists
+        const exists = await checkPhoneExists(phone);
+        
+        // Clear the checking message
+        clearFieldMessage('contact_number');
+        
+        if (exists) {
+          showFieldMessage('contact_number', '❌ Sorry, this mobile number is already registered in our database. Please use a different number or login.', 'error');
+        } else {
+          // Don't show success message if validation is skipped (endpoint not available)
+          // Just clear the field to allow user to proceed
+          console.log('[Validation] Phone validation passed or skipped');
+        }
+      } catch (error) {
+        clearFieldMessage('contact_number');
+        console.error('[Validation] Phone check error:', error);
+      } finally {
+        isCheckingPhone = false;
+      }
+    };
+
+    // Debounce the validation
+    const debouncedValidatePhone = debounce(validatePhone, 800);
+    
+    phoneInput.addEventListener('blur', debouncedValidatePhone);
+    phoneInput.addEventListener('input', () => {
+      // Clear message immediately when user starts typing
+      clearFieldMessage('contact_number');
+    });
+  }
+
+  // Real-time validation for UPI ID
+  const upiInput = document.getElementById('upi_id');
+  if (upiInput) {
+    let isCheckingUpi = false;
+    
+    const validateUpi = async () => {
+      const upiId = upiInput.value.trim();
+      
+      // Clear any existing message first
+      clearFieldMessage('upi_id');
+      
+      if (!upiId) {
+        return;
+      }
+
+      // Prevent multiple simultaneous checks
+      if (isCheckingUpi) return;
+      isCheckingUpi = true;
+
+      // Show checking message with spinner
+      showFieldMessage('upi_id', 'Checking availability...', 'info');
+
+      try {
+        // Check if UPI already exists
+        const exists = await checkUpiExists(upiId);
+        
+        // Clear the checking message
+        clearFieldMessage('upi_id');
+        
+        if (exists) {
+          showFieldMessage('upi_id', '❌ Sorry, this UPI ID is already registered with another account. Please use a different UPI ID.', 'error');
+        } else {
+          // Don't show success message if validation is skipped (endpoint not available)
+          // Just clear the field to allow user to proceed
+          console.log('[Validation] UPI validation passed or skipped');
+        }
+      } catch (error) {
+        clearFieldMessage('upi_id');
+        console.error('[Validation] UPI check error:', error);
+      } finally {
+        isCheckingUpi = false;
+      }
+    };
+
+    // Debounce the validation
+    const debouncedValidateUpi = debounce(validateUpi, 800);
+    
+    upiInput.addEventListener('blur', debouncedValidateUpi);
+    upiInput.addEventListener('input', () => {
+      // Clear message immediately when user starts typing
+      clearFieldMessage('upi_id');
+    });
+  }
 
   // Password toggle
   document.getElementById('togglePasswordReg')?.addEventListener('click', () => {
@@ -227,9 +519,11 @@ console.log('[Influencer Registration] Script loaded');
     });
 
     try {
-      const res = await fetch('/api/influencers/register', {
+      const registerUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/influencers/register') : '/api/influencers/register';
+      const res = await fetch(registerUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(data)
       });
 

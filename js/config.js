@@ -7,7 +7,9 @@ const API_CONFIG = {
     FRONTEND_URL: 'https://agrivalah.in',
     
     // Set to true for local development (uses relative URLs)
-    USE_LOCAL: false,
+    // IMPORTANT: Frontend must be served on same port as backend (3002)
+    // Use Live Server or similar to serve frontend
+    USE_LOCAL: true,
     
     // API Endpoints (matching backend routes)
     ENDPOINTS: {
@@ -76,11 +78,10 @@ const API_CONFIG = {
 
 // Helper function to get full API URL
 function getApiUrl(endpoint) {
-    // If USE_LOCAL is true, return relative URL for local development
+    // Use local backend if USE_LOCAL is true
     if (API_CONFIG.USE_LOCAL) {
-        return endpoint;
+        return `http://localhost:3002${endpoint}`;
     }
-    // Otherwise use the full backend URL
     return `${API_CONFIG.BASE_URL}${endpoint}`;
 }
 
