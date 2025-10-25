@@ -98,7 +98,7 @@ console.log('[Influencer Auth] Script loaded');
       showMessage('Login successful! Redirecting to your dashboard...', 'success');
       
       setTimeout(() => {
-        window.location.href = '/influencer';
+        window.location.href = '/influencer/dashboard';
       }, 1000);
     } catch (error) {
       showMessage(`Error: ${error.message}. Please check your internet connection.`, 'error');

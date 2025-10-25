@@ -53,7 +53,7 @@ console.log('[Influencer Dashboard] Script loaded');
       currentUser = data.user;
       return currentUser;
     } catch (error) {
-      window.location.href = '/influencer/login';
+      window.location.href = '/influencer';
       throw error;
     }
   }
@@ -430,7 +430,7 @@ console.log('[Influencer Dashboard] Script loaded');
         } catch (error) {
           console.warn('Logout failed', error);
         } finally {
-          window.location.href = '/influencer/login';
+          window.location.href = '/influencer';
         }
       });
     }

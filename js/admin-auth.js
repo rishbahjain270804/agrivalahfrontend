@@ -1,10 +1,16 @@
+console.log('[Admin Auth] Script loaded');
+
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('[Admin Auth] DOM loaded');
   const form = document.getElementById('adminLoginForm');
   const messageDiv = document.getElementById('adminLoginMessage');
 
   if (!form) {
+    console.error('[Admin Auth] Form not found!');
     return;
   }
+  
+  console.log('[Admin Auth] Form found, attaching listener');
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -20,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       const loginUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/auth/login') : '/api/auth/login';
+      console.log('[Admin Auth] Login URL:', loginUrl);
       const response = await fetch(loginUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -35,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       messageDiv.innerHTML = "<div class='alert alert-success'>Login successful. Redirecting...</div>";
       setTimeout(() => {
-        window.location.href = '/admin';
+        window.location.href = '/admin/dashboard';
       }, 800);
     } catch (error) {
       messageDiv.innerHTML = `<div class='alert alert-danger'>${error.message}</div>`;

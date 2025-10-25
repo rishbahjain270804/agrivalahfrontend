@@ -1,8 +1,14 @@
-RewriteEngine On
-RewriteBase /
+# Only enable rewrite rules if Apache mod_rewrite is available
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
 
-# Admin routes
-RewriteRule ^admin$ admin-login.html [L]
+  # Admin routes
+  RewriteRule ^admin$ admin-login.html [L]
+  RewriteRule ^admin/dashboard$ admin-dashboard.html [L]
 
-# Influencer routes
-RewriteRule ^influencer$ influencer-login.html [L]
+  # Influencer routes
+  RewriteRule ^influencer$ influencer-login.html [L]
+  RewriteRule ^influencer/dashboard$ influencer-dashboard.html [L]
+  RewriteRule ^influencer/register$ influencer-register.html [L]
+</IfModule>

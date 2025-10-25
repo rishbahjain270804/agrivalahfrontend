@@ -101,7 +101,7 @@
       state.currentUser = data.user;
       return true;
     } catch (error) {
-      window.location.href = '/admin/login';
+      window.location.href = '/admin';
       return false;
     }
   };
@@ -169,7 +169,7 @@
   const loadDashboard = async () => {
     try {
       const data = await apiRequest('/api/admin/dashboard/overview');
-      
+
       if (data.success) {
         // Update stats
         document.getElementById('statTotalReg').textContent = data.stats.totalRegistrations || 0;
@@ -181,7 +181,7 @@
       const dashboard = await apiRequest('/api/admin/dashboard');
       displayRecentRegistrations(dashboard.registrations?.slice(0, 5) || []);
       displayRecentPayments(dashboard.payments?.slice(0, 5) || []);
-      
+
       // Calculate total revenue from all payments
       const totalRevenue = (dashboard.payments || []).reduce((sum, pay) => {
         return sum + (pay.amount || 0);
@@ -261,7 +261,7 @@
 
   const displayRegistrationsTable = (data) => {
     const tbody = document.getElementById('registrationsTableBody');
-    
+
     if (!data.length) {
       tbody.innerHTML = `
         <tr>
@@ -313,9 +313,9 @@
     const states = [...new Set(data.map(r => r.state).filter(Boolean))].sort();
     const regStateFilter = document.getElementById('regStateFilter');
     const payStateFilter = document.getElementById('payStateFilter');
-    
+
     const options = states.map(state => `<option value="${state}">${state}</option>`).join('');
-    
+
     if (regStateFilter) {
       regStateFilter.innerHTML = '<option value="">All States</option>' + options;
     }
@@ -351,7 +351,7 @@
       const data = await apiRequest(`/api/admin/payments?${params}`);
       let payments = data.payments || [];
       let total = data.total || payments.length;
-      
+
       // Filter by payment type on frontend
       if (state.filters.payments.type) {
         if (state.filters.payments.type === 'razorpay') {
@@ -361,7 +361,7 @@
         }
         total = payments.length;
       }
-      
+
       state.data.payments = payments;
       state.pagination.payments.total = total;
 
@@ -374,7 +374,7 @@
 
   const displayPaymentsTable = (data) => {
     const tbody = document.getElementById('paymentsTableBody');
-    
+
     if (!data.length) {
       tbody.innerHTML = `
         <tr>
@@ -394,7 +394,7 @@
       const isRazorpay = pay.payment_id && pay.payment_id.startsWith('pay_');
       const paymentType = isRazorpay ? 'Razorpay' : 'CNF Collected';
       const paymentTypeBadge = isRazorpay ? 'badge-info' : 'badge-secondary';
-      
+
       return `
         <tr>
           <td><code>${pay.payment_id || 'N/A'}</code></td>
@@ -453,7 +453,7 @@
 
   const displayInfluencersTable = (data) => {
     const tbody = document.getElementById('influencersTableBody');
-    
+
     if (!data.length) {
       tbody.innerHTML = `
         <tr>
@@ -472,7 +472,7 @@
       // Use influencer's own tracking fields (most accurate)
       const referrals = inf.referralUses || 0;
       const earnings = inf.totalEarnings || 0;
-      
+
       return `
         <tr>
           <td>
@@ -515,7 +515,7 @@
 
   const displayApprovalsTable = (data) => {
     const tbody = document.getElementById('approvalsTableBody');
-    
+
     if (!data.length) {
       tbody.innerHTML = `
         <tr>
@@ -786,7 +786,7 @@
 
     try {
       const result = await apiRequest(`/api/admin/influencers/${id}/approve`, { method: 'POST' });
-      
+
       // Show credentials in alert
       if (result.credentials) {
         const credentialsMsg = `
@@ -803,7 +803,7 @@
       } else {
         showAlert('Influencer approved successfully! SMS sent with login credentials.', 'success');
       }
-      
+
       loadApprovals();
       loadDashboard();
       loadInfluencers();
@@ -1083,7 +1083,7 @@
         method: 'POST',
         body: JSON.stringify(data)
       });
-      
+
       showAlert('Registration added successfully!', 'success');
       bootstrap.Modal.getInstance(document.getElementById('manualEntryModal')).hide();
       loadRegistrations();
@@ -1227,7 +1227,7 @@
       } catch (error) {
         console.warn('Logout error:', error);
       } finally {
-        window.location.href = '/admin/login';
+        window.location.href = '/admin';
       }
     });
 
