@@ -3,131 +3,503 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Influencer Login - Cyano Veda</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <title>Influencer Login - Agrivalah Natural Farming</title>
+  <link rel="icon" href="/images/icon.webp" type="image/gif" sizes="16x16">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f766e 0%, #047857 50%, #065f46 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+      overflow-x: hidden;
     }
+
+    /* Animated Background Elements */
+    .bg-shapes {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .shape {
+      position: absolute;
+      opacity: 0.1;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .shape:nth-child(1) {
+      top: 10%;
+      left: 10%;
+      font-size: 80px;
+      animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+      top: 20%;
+      right: 15%;
+      font-size: 100px;
+      animation-delay: 2s;
+    }
+
+    .shape:nth-child(3) {
+      bottom: 20%;
+      left: 15%;
+      font-size: 90px;
+      animation-delay: 4s;
+    }
+
+    .shape:nth-child(4) {
+      bottom: 30%;
+      right: 10%;
+      font-size: 110px;
+      animation-delay: 6s;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      25% {
+        transform: translateY(-30px) rotate(5deg);
+      }
+      50% {
+        transform: translateY(-60px) rotate(-5deg);
+      }
+      75% {
+        transform: translateY(-30px) rotate(3deg);
+      }
+    }
+
     .login-container {
-      max-width: 450px;
+      max-width: 480px;
       width: 100%;
       padding: 20px;
+      position: relative;
+      z-index: 1;
+      animation: slideUp 0.6s ease;
     }
-    .card {
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
       border: none;
-      border-radius: 15px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
     }
-    .card-header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+    .card-header-custom {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       color: white;
-      border-radius: 15px 15px 0 0 !important;
-      padding: 30px;
+      padding: 40px 30px;
       text-align: center;
+      position: relative;
     }
-    .card-header i {
-      font-size: 3rem;
-      margin-bottom: 15px;
+
+    .logo-circle {
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      backdrop-filter: blur(10px);
+      border: 3px solid rgba(255, 255, 255, 0.3);
     }
-    .form-control:focus {
-      border-color: #667eea;
-      box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+
+    .logo-circle i {
+      font-size: 2.5rem;
     }
-    .btn-login {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border: none;
-      padding: 12px;
+
+    .card-header-custom h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .card-header-custom p {
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+
+    .card-body-custom {
+      padding: 40px 35px;
+    }
+
+    .form-label-custom {
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+
+    .input-group-custom {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6b7280;
       font-size: 1.1rem;
-      border-radius: 8px;
-      transition: transform 0.3s;
+      z-index: 10;
     }
-    .btn-login:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+
+    .form-control-custom {
+      width: 100%;
+      padding: 14px 18px 14px 50px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: #f9fafb;
     }
-    .link-white {
+
+    .form-control-custom:focus {
+      outline: none;
+      border-color: #10b981;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+    }
+
+    .form-control-custom::placeholder {
+      color: #9ca3af;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #6b7280;
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 5px;
+      transition: color 0.3s;
+      z-index: 10;
+    }
+
+    .password-toggle:hover {
+      color: #10b981;
+    }
+
+    .btn-login-custom {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border: none;
+      border-radius: 12px;
       color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+      margin-top: 10px;
+    }
+
+    .btn-login-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-login-custom:active {
+      transform: translateY(0);
+    }
+
+    .btn-login-custom:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .divider span {
+      padding: 0 15px;
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+
+    .register-section {
+      text-align: center;
+      padding: 20px;
+      background: #f9fafb;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+
+    .register-section p {
+      color: #6b7280;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+    }
+
+    .btn-register {
+      display: inline-block;
+      padding: 12px 30px;
+      background: white;
+      border: 2px solid #10b981;
+      border-radius: 10px;
+      color: #10b981;
       text-decoration: none;
       font-weight: 600;
+      transition: all 0.3s ease;
     }
-    .link-white:hover {
-      text-decoration: underline;
+
+    .btn-register:hover {
+      background: #10b981;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
     }
-    .input-group-text {
-      background: #f8f9fa;
-      border-right: none;
+
+    .footer-links {
+      text-align: center;
+      margin-top: 25px;
     }
-    .form-control {
-      border-left: none;
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links a:hover {
+      color: #d1fae5;
+      transform: translateX(-3px);
+    }
+
+    .admin-link {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .admin-link a {
+      color: #6b7280;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .admin-link a:hover {
+      color: #10b981;
+    }
+
+    /* Alert Styles */
+    .alert-custom {
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .alert-success-custom {
+      background: #d1fae5;
+      color: #065f46;
+      border-left: 4px solid #10b981;
+    }
+
+    .alert-danger-custom {
+      background: #fee2e2;
+      color: #991b1b;
+      border-left: 4px solid #dc2626;
+    }
+
+    .alert-info-custom {
+      background: #dbeafe;
+      color: #1e40af;
+      border-left: 4px solid #3b82f6;
+    }
+
+    /* Responsive */
+    @media (max-width: 576px) {
+      .login-container {
+        padding: 15px;
+      }
+
+      .card-body-custom {
+        padding: 30px 25px;
+      }
+
+      .card-header-custom {
+        padding: 30px 20px;
+      }
+
+      .card-header-custom h2 {
+        font-size: 1.5rem;
+      }
+
+      .logo-circle {
+        width: 70px;
+        height: 70px;
+      }
+
+      .logo-circle i {
+        font-size: 2rem;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Animated Background -->
+  <div class="bg-shapes">
+    <i class="fas fa-leaf shape"></i>
+    <i class="fas fa-seedling shape"></i>
+    <i class="fas fa-tractor shape"></i>
+    <i class="fas fa-sun shape"></i>
+  </div>
+
   <div class="login-container">
-    <div class="card">
-      <div class="card-header">
-        <i class="fas fa-user-tie"></i>
-        <h3 class="mb-0">Influencer Portal</h3>
-        <p class="mb-0 mt-2 opacity-75">Sign in to access your dashboard</p>
+    <div class="login-card">
+      <!-- Header -->
+      <div class="card-header-custom">
+        <div class="logo-circle">
+          <i class="fas fa-user-tie"></i>
+        </div>
+        <h2>Influencer Portal</h2>
+        <p>Sign in to access your dashboard</p>
       </div>
-      <div class="card-body p-4">
+
+      <!-- Body -->
+      <div class="card-body-custom">
         <form id="influencerLoginForm">
-          <div class="mb-3">
-            <label for="influencerMobile" class="form-label fw-bold">Mobile Number</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
-              <input type="tel" class="form-control" id="influencerMobile" required autofocus pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number">
-            </div>
+          <!-- Mobile Number -->
+          <div class="input-group-custom">
+            <label for="influencerMobile" class="form-label-custom">Mobile Number</label>
+            <i class="fas fa-mobile-alt input-icon"></i>
+            <input 
+              type="tel" 
+              class="form-control-custom" 
+              id="influencerMobile" 
+              required 
+              autofocus 
+              pattern="[6-9][0-9]{9}" 
+              maxlength="10" 
+              placeholder="Enter 10-digit mobile number"
+            >
           </div>
-          <div class="mb-4">
-            <label for="influencerPassword" class="form-label fw-bold">Password</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="fas fa-lock"></i></span>
-              <input type="password" class="form-control" id="influencerPassword" required placeholder="Enter your password">
-              <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                <i class="fas fa-eye"></i>
-              </button>
-            </div>
+
+          <!-- Password -->
+          <div class="input-group-custom">
+            <label for="influencerPassword" class="form-label-custom">Password</label>
+            <i class="fas fa-lock input-icon"></i>
+            <input 
+              type="password" 
+              class="form-control-custom" 
+              id="influencerPassword" 
+              required 
+              placeholder="Enter your password"
+            >
+            <button type="button" class="password-toggle" id="togglePassword">
+              <i class="fas fa-eye"></i>
+            </button>
           </div>
-          
-          <button type="submit" class="btn btn-primary btn-login w-100">
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-login-custom">
             <i class="fas fa-sign-in-alt me-2"></i>Sign In
           </button>
         </form>
 
-        <div id="influencerLoginMessage" class="mt-3"></div>
+        <!-- Message Container -->
+        <div id="influencerLoginMessage"></div>
 
-        <hr class="my-4">
+        <!-- Divider -->
+        <div class="divider">
+          <span>New to Agrivalah?</span>
+        </div>
 
-        <div class="text-center">
-          <p class="text-muted mb-2">Don't have an account?</p>
-          <a href="influencer-register.html" class="btn btn-outline-primary">
+        <!-- Register Section -->
+        <div class="register-section">
+          <p>Don't have an account?</p>
+          <a href="influencer-register.html" class="btn-register">
             <i class="fas fa-user-plus me-2"></i>Apply as Influencer
           </a>
         </div>
 
-        <div class="text-center mt-3">
-          <a href="/admin/login" class="text-muted small">Admin Login</a>
+        <!-- Admin Link -->
+        <div class="admin-link">
+          <a href="/admin/login">
+            <i class="fas fa-user-shield me-1"></i>Admin Login
+          </a>
         </div>
       </div>
     </div>
 
-    <div class="text-center mt-4">
-      <a href="/" class="link-white">
-        <i class="fas fa-home me-2"></i>Back to Home
+    <!-- Footer Links -->
+    <div class="footer-links">
+      <a href="/">
+        <i class="fas fa-home"></i>
+        <span>Back to Home</span>
       </a>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/config.js"></script>
-  <script src="js/influencer-auth.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/influencer-auth.js"></script>
 </body>
 </html>

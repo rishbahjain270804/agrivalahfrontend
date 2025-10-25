@@ -6,10 +6,9 @@ const API_CONFIG = {
     // Frontend domain on Hostinger
     FRONTEND_URL: 'https://agrivalah.in',
     
-    // Set to true for local development (uses relative URLs)
-    // IMPORTANT: Frontend must be served on same port as backend (3002)
-    // Use Live Server or similar to serve frontend
-    USE_LOCAL: true,
+    // Set to false for production deployment
+    // Set to true for local development (uses localhost:3002)
+    USE_LOCAL: false,
     
     // API Endpoints (matching backend routes)
     ENDPOINTS: {

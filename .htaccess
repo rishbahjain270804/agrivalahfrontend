@@ -1,0 +1,22 @@
+RewriteEngine On
+RewriteBase /
+
+# Force HTTPS (if SSL is configured)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Admin routes
+RewriteRule ^admin/login$ admin-login.html [L]
+RewriteRule ^admin$ admin-dashboard.html [L]
+
+# Influencer routes
+RewriteRule ^influencer/login$ influencer-login.html [L]
+RewriteRule ^influencer/register$ influencer-register.html [L]
+RewriteRule ^influencer$ influencer-dashboard.html [L]
+
+# Prevent direct access to .html files (optional)
+# RewriteCond %{THE_REQUEST} \.html
+# RewriteRule ^(.*)\.html$ /$1 [R=301,L]
+
+# Custom 404 page (if you create one)
+# ErrorDocument 404 /404.html

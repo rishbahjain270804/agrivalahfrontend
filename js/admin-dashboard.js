@@ -469,9 +469,9 @@
     }
 
     tbody.innerHTML = data.map(inf => {
-      const couponUsage = inf.coupons && inf.coupons[0] ? inf.coupons[0].usageCount : 0;
-      const totalCommission = inf.metrics ? inf.metrics.totalCommission : 0;
-      const totalRegistrations = inf.metrics ? inf.metrics.totalRegistrations : 0;
+      // Use influencer's own tracking fields (most accurate)
+      const referrals = inf.referralUses || 0;
+      const earnings = inf.totalEarnings || 0;
       
       return `
         <tr>
@@ -484,8 +484,8 @@
           <td>${inf.type}</td>
           <td>${inf.region || '-'}</td>
           <td><code>${inf.couponCode || '-'}</code></td>
-          <td>${couponUsage}</td>
-          <td>${formatCurrency(totalCommission)}</td>
+          <td>${referrals}</td>
+          <td>${formatCurrency(earnings)}</td>
           <td><span class="badge badge-success">Active</span></td>
           <td>
             <button class="btn btn-sm btn-primary" onclick="window.viewInfluencerDetails('${inf.id}')">
@@ -780,15 +780,33 @@
 
   // Approve Influencer
   window.approveInfluencer = async (id) => {
-    if (!confirm('Approve this influencer? This will create a coupon code and activate their account.')) {
+    if (!confirm('Approve this influencer? This will:\n- Create a unique coupon code\n- Activate their account\n- Send SMS with login credentials')) {
       return;
     }
 
     try {
-      await apiRequest(`/api/admin/influencers/${id}/approve`, { method: 'POST' });
-      showAlert('Influencer approved successfully!', 'success');
+      const result = await apiRequest(`/api/admin/influencers/${id}/approve`, { method: 'POST' });
+      
+      // Show credentials in alert
+      if (result.credentials) {
+        const credentialsMsg = `
+          <strong>Influencer Approved Successfully!</strong><br><br>
+          <div class="alert alert-info">
+            <strong>Login Credentials (SMS Sent):</strong><br>
+            Mobile: <code>${result.credentials.mobile}</code><br>
+            Password: <code>${result.credentials.password}</code><br>
+            Coupon Code: <code>${result.credentials.couponCode}</code>
+          </div>
+          <small class="text-muted">The influencer has been notified via SMS with these credentials.</small>
+        `;
+        showAlert(credentialsMsg, 'success');
+      } else {
+        showAlert('Influencer approved successfully! SMS sent with login credentials.', 'success');
+      }
+      
       loadApprovals();
       loadDashboard();
+      loadInfluencers();
     } catch (error) {
       showAlert('Failed to approve influencer: ' + error.message, 'danger');
     }
