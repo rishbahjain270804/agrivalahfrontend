@@ -49,6 +49,7 @@
   const apiRequest = async (endpoint, options = {}) => {
     try {
       const url = typeof getApiUrl === 'function' ? getApiUrl(endpoint) : endpoint;
+      console.log('[Admin Dashboard] API Request:', options.method || 'GET', url);
       const response = await fetch(url, {
         ...options,
         credentials: 'include',
@@ -58,13 +59,15 @@
         }
       });
 
+      console.log('[Admin Dashboard] API Response:', response.status, endpoint);
       const data = await response.json();
       if (!response.ok) {
+        console.error('[Admin Dashboard] API Error:', response.status, data);
         throw new Error(data.message || 'Request failed');
       }
       return data;
     } catch (error) {
-      console.error('API Error:', error);
+      console.error('[Admin Dashboard] API Error:', error);
       throw error;
     }
   };
@@ -94,13 +97,20 @@
 
   const checkAuth = async () => {
     try {
+      console.log('[Admin Dashboard] Checking authentication...');
       const data = await apiRequest('/api/auth/me');
+      console.log('[Admin Dashboard] Auth response:', data);
       if (!data.user || data.user.role !== 'admin') {
+        console.error('[Admin Dashboard] Auth failed - not admin role. User:', data.user);
         throw new Error('Not authorized');
       }
       state.currentUser = data.user;
+      console.log('[Admin Dashboard] Auth successful, user:', data.user.email);
       return true;
     } catch (error) {
+      console.error('[Admin Dashboard] Auth error, redirecting to login:', error.message);
+      console.error('[Admin Dashboard] PAUSING 5 SECONDS - CHECK CONSOLE NOW!');
+      await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5 seconds
       window.location.href = '/admin';
       return false;
     }
@@ -1343,10 +1353,12 @@
 
   const init = async () => {
     console.log('[Admin Dashboard] Initializing...');
+    console.log('[Admin Dashboard] Starting authentication check...');
 
     // Check authentication
     const isAuthenticated = await checkAuth();
     if (!isAuthenticated) {
+      console.error('[Admin Dashboard] Authentication failed, stopping initialization');
       return;
     }
 

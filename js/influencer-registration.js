@@ -238,10 +238,14 @@ console.log('[Influencer Registration] Script loaded');
         otpSent = true;
         
         // Show OTP field
-        const otpContainer = document.getElementById('otpFieldContainer');
-        if (otpContainer) {
-          otpContainer.classList.add('show');
-          otpContainer.style.display = 'block';
+        const otpSection = document.getElementById('otpSection');
+        console.log('[OTP] OTP section element:', otpSection);
+        if (otpSection) {
+          otpSection.classList.add('show');
+          otpSection.style.display = 'block';
+          console.log('[OTP] OTP section shown');
+        } else {
+          console.error('[OTP] OTP section not found!');
         }
         
         document.getElementById('contact_number').readOnly = true;
@@ -311,11 +315,25 @@ console.log('[Influencer Registration] Script loaded');
       if (res.ok && result.success) {
         showMessage('Mobile number verified successfully!', 'success');
         otpVerified = true;
-        document.getElementById('otpFieldContainer').style.display = 'none';
-        document.getElementById('sendOtpBtn').innerHTML = '<i class="fas fa-check-circle"></i> Verified';
-        document.getElementById('sendOtpBtn').classList.remove('btn-outline-primary');
-        document.getElementById('sendOtpBtn').classList.add('btn-success');
-        document.getElementById('sendOtpBtn').disabled = true;
+        
+        // Hide OTP section
+        const otpSection = document.getElementById('otpSection');
+        if (otpSection) {
+          otpSection.style.display = 'none';
+        }
+        
+        // Show verified badge
+        const verifiedBadge = document.getElementById('phoneVerified');
+        if (verifiedBadge) {
+          verifiedBadge.classList.add('show');
+        }
+        
+        // Update send button
+        const sendBtn = document.getElementById('sendOtpBtn');
+        sendBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verified';
+        sendBtn.classList.remove('btn-primary');
+        sendBtn.classList.add('btn-success');
+        sendBtn.disabled = true;
       } else {
         throw new Error(result.message || 'Invalid OTP');
       }
@@ -327,31 +345,37 @@ console.log('[Influencer Registration] Script loaded');
   };
 
   // Attach OTP button listeners
+  console.log('[Init] Looking for OTP buttons...');
   const sendOtpButton = document.getElementById('sendOtpBtn');
   const verifyOtpButton = document.getElementById('verifyOtpBtn');
   
+  console.log('[Init] Send OTP button:', sendOtpButton ? 'FOUND' : 'NOT FOUND');
+  console.log('[Init] Verify OTP button:', verifyOtpButton ? 'FOUND' : 'NOT FOUND');
+  
   if (sendOtpButton) {
-    console.log('[Init] Send OTP button found, attaching listener');
+    console.log('[Init] Attaching click listener to Send OTP button');
     sendOtpButton.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      console.log('[Init] Send OTP button clicked - calling sendOtp');
+      console.log('[Click] Send OTP button clicked!');
       sendOtp();
     });
+    console.log('[Init] Send OTP listener attached successfully');
   } else {
-    console.error('[Init] Send OTP button NOT found!');
+    console.error('[Init] ERROR: Send OTP button NOT found in DOM!');
   }
   
   if (verifyOtpButton) {
-    console.log('[Init] Verify OTP button found, attaching listener');
+    console.log('[Init] Attaching click listener to Verify OTP button');
     verifyOtpButton.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      console.log('[Init] Verify OTP button clicked - calling verifyOtp');
+      console.log('[Click] Verify OTP button clicked!');
       verifyOtp();
     });
+    console.log('[Init] Verify OTP listener attached successfully');
   } else {
-    console.error('[Init] Verify OTP button NOT found!');
+    console.error('[Init] ERROR: Verify OTP button NOT found in DOM!');
   }
 
   // Real-time validation for phone number

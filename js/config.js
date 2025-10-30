@@ -1,10 +1,10 @@
 // API Configuration
 const API_CONFIG = {
-    // Backend API Base URL - Your deployed backend on Render
-    BASE_URL: 'https://agrivalahbackend.onrender.com',
+    // Backend API Base URL - Same domain on VPS
+    BASE_URL: window.location.origin,
     
-    // Frontend domain on Hostinger
-    FRONTEND_URL: 'https://agrivalah.in',
+    // Frontend domain on Hostinger VPS
+    FRONTEND_URL: window.location.origin,
     
     // Set to false for production deployment
     // Set to true for local development (uses localhost:3002)
@@ -81,7 +81,8 @@ function getApiUrl(endpoint) {
     if (API_CONFIG.USE_LOCAL) {
         return `http://localhost:3002${endpoint}`;
     }
-    return `${API_CONFIG.BASE_URL}${endpoint}`;
+    // On VPS, API is on same domain
+    return `${endpoint}`;
 }
 
 // Helper function for API calls with credentials

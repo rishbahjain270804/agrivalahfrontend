@@ -4,877 +4,538 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://agrivalahbackend.onrender.com https://api.razorpay.com; img-src 'self' data: https:; frame-src 'self' https://api.razorpay.com;">
-  <title>Become an Influencer - Agrivalah Natural Farming</title>
+  <title>Become an Influencer - Agrivalah</title>
   <link rel="icon" href="images/icon.webp" type="image/gif" sizes="16x16">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      background: linear-gradient(135deg, #047857 0%, #065f46 100%);
-      min-height: 100vh;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    /* Floating Background Elements */
-    .floating-elements {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .floating-icon {
-      position: absolute;
-      opacity: 0.1;
-      animation: float 20s infinite ease-in-out;
-    }
-
-    .floating-icon:nth-child(1) {
-      top: 10%;
-      left: 10%;
-      font-size: 60px;
-      animation-delay: 0s;
-    }
-
-    .floating-icon:nth-child(2) {
-      top: 20%;
-      right: 15%;
-      font-size: 80px;
-      animation-delay: 2s;
-    }
-
-    .floating-icon:nth-child(3) {
-      bottom: 20%;
-      left: 15%;
-      font-size: 70px;
-      animation-delay: 4s;
-    }
-
-    .floating-icon:nth-child(4) {
-      bottom: 30%;
-      right: 10%;
-      font-size: 90px;
-      animation-delay: 6s;
-    }
-
-    @keyframes float {
-
-      0%,
-      100% {
-        transform: translateY(0) rotate(0deg);
-      }
-
-      25% {
-        transform: translateY(-30px) rotate(5deg);
-      }
-
-      50% {
-        transform: translateY(-60px) rotate(-5deg);
-      }
-
-      75% {
-        transform: translateY(-30px) rotate(3deg);
-      }
-    }
-
-    .registration-container {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    /* Header Styles */
-    .header-section {
-      text-align: center;
-      color: white;
-      margin-bottom: 40px;
-      animation: fadeInDown 0.8s ease;
-    }
-
-    .header-section h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 15px;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    .header-section .lead {
-      font-size: 1.2rem;
-      opacity: 0.95;
-    }
-
-    /* Progress Bar */
-    .progress-container {
-      background: white;
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 30px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .progress-steps {
-      display: flex;
-      justify-content: space-between;
-      position: relative;
-      margin-bottom: 10px;
-    }
-
-    .progress-step {
-      flex: 1;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .progress-step-circle {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #e9ecef;
-      margin: 0 auto 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-
-    .progress-step.active .progress-step-circle {
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: white;
-      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-    }
-
-    .progress-step.completed .progress-step-circle {
-      background: #10b981;
-      color: white;
-    }
-
-    .progress-step-label {
-      font-size: 0.85rem;
-      color: #6c757d;
-      font-weight: 500;
-    }
-
-    .progress-step.active .progress-step-label {
-      color: #10b981;
-      font-weight: 600;
-    }
-
-    /* Card Styles */
-    .card {
-      border: none;
-      border-radius: 15px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-      overflow: hidden;
-      animation: fadeInUp 0.8s ease;
-    }
-
-    .card-header {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      color: white;
-      padding: 30px;
-      border: none;
-    }
-
-    .card-header h3 {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f5f7fa;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      font-size: 28px;
       font-weight: 700;
-    }
-
-    /* Benefits Section */
-    .info-section {
-      background: white;
-      border-radius: 15px;
-      padding: 30px;
-      margin-bottom: 30px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-      animation: fadeInUp 0.8s ease 0.2s both;
-    }
-
-    .benefit-card {
-      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-      border-radius: 12px;
-      padding: 25px;
-      margin-bottom: 15px;
-      border-left: 4px solid #10b981;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .benefit-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2);
-    }
-
-    .benefit-icon {
-      font-size: 2.5rem;
-      color: #10b981;
-      margin-bottom: 15px;
-      display: inline-block;
-      animation: bounce 2s infinite;
-    }
-
-    @keyframes bounce {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-10px);
-      }
-    }
-
-    .benefit-card h5 {
-      color: #047857;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    /* Form Styles */
-    .form-section {
-      padding: 40px;
-      background: white;
-    }
-
-    .section-title {
-      color: #047857;
-      font-weight: 700;
-      margin-bottom: 25px;
-      padding-bottom: 15px;
-      border-bottom: 2px solid #10b981;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .form-label {
-      font-weight: 600;
-      color: #1f2937;
+      color: #1a202c;
       margin-bottom: 8px;
     }
 
-    .required-field::after {
+    .header p {
+      font-size: 16px;
+      color: #718096;
+    }
+
+    /* Card */
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      margin-bottom: 20px;
+    }
+
+    /* Form Section */
+    .form-section {
+      margin-bottom: 32px;
+    }
+
+    .form-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    /* Form Controls */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #4a5568;
+      margin-bottom: 8px;
+    }
+
+    .required::after {
       content: " *";
-      color: #dc3545;
-      font-weight: 700;
+      color: #e53e3e;
     }
 
     .form-control,
     .form-select {
-      border: 2px solid #e5e7eb;
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 15px;
+      border: 1px solid #e2e8f0;
       border-radius: 8px;
-      padding: 12px 15px;
-      transition: all 0.3s ease;
+      transition: all 0.2s;
+      background: white;
     }
 
     .form-control:focus,
     .form-select:focus {
+      outline: none;
       border-color: #10b981;
-      box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.15);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
     }
 
-    .input-group-text {
-      background: #f3f4f6;
-      border: 2px solid #e5e7eb;
-      border-right: none;
+    .form-control::placeholder {
+      color: #a0aec0;
     }
 
-    .input-group .form-control {
-      border-left: none;
+    textarea.form-control {
+      resize: vertical;
+      min-height: 100px;
     }
 
-    /* Button Styles */
-    .btn-primary {
-      background: linear-gradient(135deg, #10b981, #059669);
-      border: none;
-      padding: 12px 30px;
-      font-weight: 600;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
-      background: linear-gradient(135deg, #059669, #047857);
-    }
-
-    .btn-submit {
-      background: linear-gradient(135deg, #10b981, #059669);
-      border: none;
-      padding: 15px 50px;
-      font-size: 1.1rem;
-      font-weight: 700;
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-    }
-
-    .btn-submit:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.5);
-    }
-
-    .btn-submit:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* Alert Styles */
-    .alert {
-      border-radius: 10px;
-      border: none;
-      padding: 15px 20px;
-      animation: slideInRight 0.5s ease;
-    }
-
-    .alert-success {
-      background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-      color: #065f46;
-      border-left: 4px solid #10b981;
-    }
-
-    .alert-danger {
-      background: linear-gradient(135deg, #fee2e2, #fecaca);
-      color: #991b1b;
-      border-left: 4px solid #dc2626;
-    }
-
-    /* Field Validation Messages */
-    .field-validation-message {
-      animation: slideInUp 0.3s ease;
-      font-weight: 600;
-    }
-
-    .border-success {
-      border-color: #10b981 !important;
-      border-width: 2px !important;
-    }
-
-    .border-danger {
-      border-color: #dc2626 !important;
-      border-width: 2px !important;
-    }
-
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .alert-info {
-      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-      color: #1e40af;
-      border-left: 4px solid #3b82f6;
-    }
-
-    /* OTP Field */
-    .otp-container {
-      display: none;
-      animation: fadeIn 0.5s ease;
-    }
-
-    .otp-container.show {
+    .form-text {
+      font-size: 13px;
+      color: #718096;
+      margin-top: 6px;
       display: block;
     }
 
-    /* Verification Badge */
-    .verification-badge {
+    /* Input Group */
+    .input-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .input-group .form-control {
+      flex: 1;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      padding: 5px 12px;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: #10b981;
+      color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: #059669;
+    }
+
+    .btn-outline {
+      background: white;
+      color: #10b981;
+      border: 1px solid #10b981;
+    }
+
+    .btn-outline:hover:not(:disabled) {
+      background: #f0fdf4;
+    }
+
+    .btn-success {
+      background: #10b981;
+      color: white;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      font-size: 16px;
+      background: #10b981;
+      color: white;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: #059669;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    /* OTP Section */
+    .otp-section {
+      display: none;
+      padding: 16px;
+      background: #f0fdf4;
+      border-radius: 8px;
+      border: 1px solid #d1fae5;
+      margin-top: 12px;
+    }
+
+    .otp-section.show {
+      display: block;
+    }
+
+    .otp-timer {
+      font-size: 13px;
+      color: #059669;
+      margin-top: 8px;
+    }
+
+    /* Verification Badge */
+    .verified-badge {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
       background: #d1fae5;
       color: #065f46;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-top: 5px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 8px;
+      width: fit-content;
     }
 
-    /* Footer Link */
-    .footer-link-section {
+    .verified-badge.show {
+      display: inline-flex;
+    }
+
+    /* Alert */
+    .alert {
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .alert-success {
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    .alert-danger {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    .alert-info {
+      background: #dbeafe;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+    }
+
+    /* Checkbox */
+    .form-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      background: #f9fafb;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .form-check-input {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      cursor: pointer;
+    }
+
+    .form-check-label {
+      flex: 1;
+      font-size: 14px;
+      color: #4a5568;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    .footer-text {
       text-align: center;
-      margin-top: 30px;
       padding: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      backdrop-filter: blur(10px);
+      color: #718096;
+      font-size: 14px;
     }
 
-    .footer-link-section a {
-      color: white;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .footer-link-section a:hover {
+    .footer-text a {
       color: #10b981;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-text a:hover {
       text-decoration: underline;
     }
 
-    /* Animations */
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* Grid */
+    .row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
     }
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
-    @keyframes slideInRight {
-      from {
-        opacity: 0;
-        transform: translateX(50px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
+    .col-full {
+      grid-column: 1 / -1;
     }
 
     /* Responsive */
     @media (max-width: 768px) {
-      .header-section h1 {
-        font-size: 1.8rem;
+      body {
+        padding: 10px;
       }
 
-      .form-section {
-        padding: 25px 20px;
+      .card {
+        padding: 24px;
       }
 
-      .benefit-card {
-        padding: 20px;
+      .row {
+        grid-template-columns: 1fr;
       }
 
-      .progress-step-label {
-        font-size: 0.75rem;
+      .header h1 {
+        font-size: 24px;
+      }
+    }
+
+    /* Loading State */
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
       }
 
-      .btn-submit {
-        padding: 12px 30px;
-        font-size: 1rem;
+      to {
+        transform: rotate(360deg);
       }
     }
   </style>
 </head>
 
 <body>
-  <!-- Floating Background Elements -->
-  <div class="floating-elements">
-    <i class="fas fa-leaf floating-icon"></i>
-    <i class="fas fa-seedling floating-icon"></i>
-    <i class="fas fa-tractor floating-icon"></i>
-    <i class="fas fa-sun floating-icon"></i>
-  </div>
-
-  <div class="container registration-container" style="position: relative; z-index: 1;">
+  <div class="container">
     <!-- Header -->
-    <div class="header-section">
-      <h1>
-        <i class="fas fa-leaf me-2"></i>Become an Agrivalah Influencer
-      </h1>
-      <p class="lead">Promote Natural Farming & Earn ₹50 Commission for Every Referral!</p>
+    <div class="header">
+      <h1><i class="fas fa-leaf" style="color: #10b981;"></i> Become an Agrivalah Influencer</h1>
+      <p>Earn ₹50 commission for every farmer you refer</p>
     </div>
 
-    <!-- Progress Indicator -->
-    <div class="progress-container">
-      <div class="progress-steps">
-        <div class="progress-step active" data-step="1">
-          <div class="progress-step-circle">1</div>
-          <div class="progress-step-label">Personal Info</div>
-        </div>
-        <div class="progress-step" data-step="2">
-          <div class="progress-step-circle">2</div>
-          <div class="progress-step-label">Verification</div>
-        </div>
-        <div class="progress-step" data-step="3">
-          <div class="progress-step-circle">3</div>
-          <div class="progress-step-label">Details</div>
-        </div>
-        <div class="progress-step" data-step="4">
-          <div class="progress-step-circle">4</div>
-          <div class="progress-step-label">Payment Info</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Benefits Section -->
-    <div class="info-section">
-      <h3 class="mb-4"><i class="fas fa-star text-warning me-2"></i>Why Join Agrivalah?</h3>
-      <div class="row g-3">
-        <div class="col-md-6">
-          <div class="benefit-card">
-            <div class="benefit-icon"><i class="fas fa-rupee-sign"></i></div>
-            <h5>Earn ₹50 Per Referral</h5>
-            <p class="mb-0">Get instant commission for every successful farmer registration using your unique referral
-              code</p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="benefit-card">
-            <div class="benefit-icon"><i class="fas fa-chart-line"></i></div>
-            <h5>Real-Time Dashboard</h5>
-            <p class="mb-0">Track your referrals, earnings, and performance metrics with our intuitive dashboard</p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="benefit-card">
-            <div class="benefit-icon"><i class="fas fa-qrcode"></i></div>
-            <h5>Personalized Referral Code</h5>
-            <p class="mb-0">Get your unique coupon code to share with farmers in your network and community</p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="benefit-card">
-            <div class="benefit-icon"><i class="fas fa-mobile-alt"></i></div>
-            <h5>Quick UPI Payouts</h5>
-            <p class="mb-0">Receive instant payments directly to your UPI ID or bank account - hassle-free!</p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="benefit-card">
-            <div class="benefit-icon"><i class="fas fa-users"></i></div>
-            <h5>Community Support</h5>
-            <p class="mb-0">Join a network of influencers promoting sustainable and natural farming practices</p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="benefit-card">
-            <div class="benefit-icon"><i class="fas fa-certificate"></i></div>
-            <h5>Official Recognition</h5>
-            <p class="mb-0">Get recognized as an official Agrivalah partner promoting PGS-India certification</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Alert Container -->
+    <div id="alertContainer"></div>
 
     <!-- Registration Form -->
     <div class="card">
-      <div class="card-header">
-        <h3 class="mb-0"><i class="fas fa-user-plus me-2"></i>Influencer Application Form</h3>
-        <p class="mb-0 mt-2 opacity-90">Fill in your details to become an official Agrivalah partner</p>
-      </div>
-      <div class="form-section">
-        <form id="influencerRegistrationForm">
+      <form id="influencerRegistrationForm">
 
-          <!-- Personal Information -->
-          <div class="mb-5">
-            <h5 class="section-title">
-              <i class="fas fa-user"></i>
-              Personal Information
-            </h5>
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label for="name" class="form-label required-field">Full Name</label>
-                <div class="input-group">
-                  <span class="input-group-text"><i class="fas fa-user"></i></span>
-                  <input type="text" class="form-control" id="name" required placeholder="Enter your full name">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <label for="contact_number" class="form-label required-field">Contact Number</label>
-                <div class="input-group">
-                  <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                  <input type="tel" class="form-control" id="contact_number" required pattern="[6-9][0-9]{9}"
-                    maxlength="10" placeholder="10-digit mobile">
-                  <button class="btn btn-primary" type="button" id="sendOtpBtn">
-                    <i class="fas fa-paper-plane me-1"></i>Send OTP
-                  </button>
-                </div>
-                <small class="text-muted">Must start with 6-9</small>
-                <div id="phoneVerified" class="verification-badge" style="display: none;">
-                  <i class="fas fa-check-circle"></i> Verified
-                </div>
-              </div>
+        <!-- Personal Information -->
+        <div class="form-section">
+          <h3 class="section-title">Personal Information</h3>
+          <div class="row">
+            <div class="form-group">
+              <label class="form-label required">Full Name</label>
+              <input type="text" class="form-control" id="name" required placeholder="Enter your full name">
+            </div>
 
-              <!-- OTP Field -->
-              <div class="col-md-6 otp-container" id="otpFieldContainer">
-                <label for="otp" class="form-label required-field">Enter OTP</label>
-                <div class="input-group">
-                  <span class="input-group-text"><i class="fas fa-key"></i></span>
-                  <input type="text" class="form-control" id="otp" maxlength="4" placeholder="4-digit OTP">
-                  <button class="btn btn-success" type="button" id="verifyOtpBtn">
-                    <i class="fas fa-check me-1"></i>Verify
-                  </button>
-                </div>
-                <small class="text-muted" id="otpTimer"></small>
-              </div>
-
-              <div class="col-md-6">
-                <label for="email" class="form-label">Email Address</label>
-                <div class="input-group">
-                  <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                  <input type="email" class="form-control" id="email" placeholder="your.email@example.com">
-                </div>
-                <small class="text-muted">For notifications (optional)</small>
-              </div>
-
-              <div class="col-md-6">
-                <label for="type" class="form-label required-field">Influencer Type</label>
-                <div class="input-group">
-                  <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
-                  <select class="form-select" id="type" required>
-                    <option value="">Select your type</option>
-                    <option value="Farmer">Farmer</option>
-                    <option value="NGO">NGO / Organization</option>
-                    <option value="Youtuber">YouTuber / Content Creator</option>
-                    <option value="Local Promoter">Local Promoter</option>
-                    <option value="Agricultural Expert">Agricultural Expert</option>
-                    <option value="Community Leader">Community Leader</option>
-                  </select>
-                </div>
-              </div>
+            <div class="form-group">
+              <label class="form-label required">Influencer Type</label>
+              <select class="form-select" id="type" required>
+                <option value="">Select type</option>
+                <option value="Farmer">Farmer</option>
+                <option value="NGO">NGO / Organization</option>
+                <option value="Youtuber">YouTuber / Content Creator</option>
+                <option value="Local Promoter">Local Promoter</option>
+                <option value="Agricultural Expert">Agricultural Expert</option>
+                <option value="Community Leader">Community Leader</option>
+              </select>
             </div>
           </div>
 
-          <!-- Security -->
-          <div class="mb-5">
-            <h5 class="section-title">
-              <i class="fas fa-lock"></i>
-              Account Security
-            </h5>
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label for="password" class="form-label required-field">Set Password</label>
-                <div class="input-group">
-                  <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                  <input type="password" class="form-control" id="password" required minlength="6"
-                    placeholder="Minimum 6 characters">
-                  <button class="btn btn-outline-secondary" type="button" id="togglePasswordReg">
-                    <i class="fas fa-eye"></i>
-                  </button>
-                </div>
-                <small class="text-muted">Use mobile number and this password to login</small>
+          <div class="row">
+            <div class="form-group">
+              <label class="form-label required">Mobile Number</label>
+              <div class="input-group">
+                <input type="tel" class="form-control" id="contact_number" required pattern="[6-9][0-9]{9}"
+                  maxlength="10" placeholder="10-digit mobile">
+                <button type="button" class="btn btn-primary" id="sendOtpBtn">
+                  <i class="fas fa-paper-plane"></i> Send OTP
+                </button>
               </div>
-              <div class="col-md-6">
-                <label for="confirm_password" class="form-label required-field">Confirm Password</label>
-                <div class="input-group">
-                  <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                  <input type="password" class="form-control" id="confirm_password" required minlength="6"
-                    placeholder="Re-enter password">
-                </div>
-                <div id="passwordMatch" style="display: none; margin-top: 5px;"></div>
+              <small class="form-text">Must start with 6-9</small>
+              <div class="verified-badge" id="phoneVerified">
+                <i class="fas fa-check-circle"></i> Verified
               </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-control" id="email" placeholder="your.email@example.com">
+              <small class="form-text">Optional, for notifications</small>
             </div>
           </div>
 
-          <!-- Location & Social -->
-          <div class="mb-5">
-            <h5 class="section-title">
-              <i class="fas fa-map-marker-alt"></i>
-              Location & Social Presence
-            </h5>
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label for="region" class="form-label required-field">Region / Area</label>
-                <div class="input-group">
-                  <span class="input-group-text"><i class="fas fa-map-pin"></i></span>
-                  <input type="text" class="form-control" id="region" required placeholder="District, State">
-                </div>
-                <small class="text-muted">Your primary area of influence</small>
+          <!-- OTP Field -->
+          <div class="otp-section" id="otpSection">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label required">Enter OTP</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="otp" maxlength="4" placeholder="4-digit OTP">
+                <button type="button" class="btn btn-success" id="verifyOtpBtn">
+                  <i class="fas fa-check"></i> Verify
+                </button>
               </div>
-              <div class="col-md-6">
-                <label for="social_link" class="form-label">Social Media Profile</label>
-                <div class="input-group">
-                  <span class="input-group-text"><i class="fas fa-share-alt"></i></span>
-                  <input type="url" class="form-control" id="social_link" placeholder="https://youtube.com/@yourname">
-                </div>
-                <small class="text-muted">YouTube, Facebook, Instagram, etc.</small>
-              </div>
+              <div class="otp-timer" id="otpTimer"></div>
             </div>
           </div>
+        </div>
 
-          <!-- Payment Information -->
-          <div class="mb-5">
-            <h5 class="section-title">
-              <i class="fas fa-wallet"></i>
-              Payment Information
-            </h5>
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label for="upi_id" class="form-label required-field">UPI ID</label>
-                <div class="input-group">
-                  <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
-                  <input type="text" class="form-control" id="upi_id" required placeholder="yourname@paytm">
-                </div>
-                <small class="text-muted">For instant commission payouts</small>
-              </div>
-              <div class="col-md-6">
-                <label for="bank_details" class="form-label">Bank Details (Optional)</label>
-                <textarea class="form-control" id="bank_details" rows="3"
-                  placeholder="Bank Name&#10;Account Number&#10;IFSC Code"></textarea>
-                <small class="text-muted">Alternative payment method</small>
-              </div>
+        <!-- Security -->
+        <div class="form-section">
+          <h3 class="section-title">Account Security</h3>
+          <div class="row">
+            <div class="form-group">
+              <label class="form-label required">Password</label>
+              <input type="password" class="form-control" id="password" required minlength="6"
+                placeholder="Minimum 6 characters">
+              <small class="form-text">Use this to login later</small>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label required">Confirm Password</label>
+              <input type="password" class="form-control" id="confirm_password" required minlength="6"
+                placeholder="Re-enter password">
+              <div id="passwordMatch" style="margin-top: 8px;"></div>
             </div>
           </div>
+        </div>
 
-          <!-- Additional Information -->
-          <div class="mb-5">
-            <h5 class="section-title">
-              <i class="fas fa-info-circle"></i>
-              Additional Information
-            </h5>
-            <div class="row g-3">
-              <div class="col-12">
-                <label for="notes" class="form-label">Why do you want to become an influencer?</label>
-                <textarea class="form-control" id="notes" rows="4"
-                  placeholder="Tell us about your interest in promoting natural farming and how you plan to reach farmers in your community..."></textarea>
-                <small class="text-muted">This helps us understand your motivation and approve your application
-                  faster</small>
-              </div>
+        <!-- Location -->
+        <div class="form-section">
+          <h3 class="section-title">Location & Social</h3>
+          <div class="row">
+            <div class="form-group">
+              <label class="form-label required">Region / Area</label>
+              <input type="text" class="form-control" id="region" required placeholder="District, State">
+              <small class="form-text">Your primary area of influence</small>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Social Media Profile</label>
+              <input type="url" class="form-control" id="social_link" placeholder="https://youtube.com/@yourname">
+              <small class="form-text">YouTube, Facebook, Instagram, etc.</small>
             </div>
           </div>
+        </div>
 
-          <!-- Terms & Conditions -->
-          <div class="mb-4">
-            <div class="form-check p-3" style="background: #f0fdf4; border-radius: 10px; border: 2px solid #10b981;">
-              <input class="form-check-input" type="checkbox" id="terms" required
-                style="width: 20px; height: 20px; margin-top: 2px;">
-              <label class="form-check-label ms-2" for="terms" style="line-height: 1.6;">
-                <strong>I agree to the <a href="#" target="_blank" class="text-success">Terms & Conditions</a></strong>
-                and understand that:
-                <ul class="mt-2 mb-0" style="font-size: 0.9rem;">
-                  <li>My application will be reviewed by the admin team</li>
-                  <li>I will promote natural farming practices ethically</li>
-                  <li>Commission will be paid only for verified registrations</li>
-                  <li>I can access my dashboard after approval</li>
-                </ul>
-              </label>
+        <!-- Payment Information -->
+        <div class="form-section">
+          <h3 class="section-title">Payment Information</h3>
+          <div class="row">
+            <div class="form-group">
+              <label class="form-label required">UPI ID</label>
+              <input type="text" class="form-control" id="upi_id" required placeholder="yourname@paytm">
+              <small class="form-text">For commission payouts</small>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Bank Details</label>
+              <textarea class="form-control" id="bank_details" rows="3"
+                placeholder="Bank Name, Account Number, IFSC Code (Optional)"></textarea>
             </div>
           </div>
+        </div>
 
-          <!-- Submit Button -->
-          <div class="text-center">
-            <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
-              <i class="fas fa-paper-plane me-2"></i>Submit Application
-            </button>
-            <p class="mt-3 text-muted">
-              <i class="fas fa-info-circle me-1"></i>
-              You'll receive a confirmation once your application is reviewed
-            </p>
+        <!-- Additional Info -->
+        <div class="form-section">
+          <h3 class="section-title">Additional Information</h3>
+          <div class="form-group">
+            <label class="form-label">Why do you want to become an influencer?</label>
+            <textarea class="form-control" id="notes" rows="4"
+              placeholder="Tell us about your interest in promoting natural farming..."></textarea>
+            <small class="form-text">This helps us approve your application faster</small>
           </div>
-        </form>
+        </div>
 
-        <!-- Message Display -->
-        <div id="influencerRegistrationMessage" class="mt-4"></div>
-      </div>
+        <!-- Terms -->
+        <div class="form-section">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="terms" required>
+            <label class="form-check-label" for="terms">
+              I agree to the <a href="#" style="color: #10b981;">Terms & Conditions</a> and understand that my
+              application will be reviewed by the admin team before I can access the dashboard.
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-submit" id="submitBtn">
+          <i class="fas fa-paper-plane"></i>
+          Submit Application
+        </button>
+      </form>
+
+      <!-- Message Display -->
+      <div id="influencerRegistrationMessage" style="margin-top: 20px;"></div>
     </div>
 
-    <!-- Already Registered -->
-    <div class="footer-link-section">
-      <p class="text-white mb-0">
-        <i class="fas fa-user-check me-2"></i>
-        Already registered? <a href="/influencer/login">Login to your dashboard</a>
-      </p>
+    <!-- Footer -->
+    <div class="footer-text">
+      Already registered? <a href="/influencer">Login to your dashboard</a>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/config.js"></script>
-  <script src="js/influencer-registration.js"></script>
-
-  <!-- Additional Scripts for Enhanced Functionality -->
+  <script src="/js/config.js"></script>
+  <script src="/js/influencer-registration.js"></script>
   <script>
-    // Password Toggle
-    document.getElementById('togglePasswordReg').addEventListener('click', function () {
-      const passwordField = document.getElementById('password');
-      const icon = this.querySelector('i');
-      if (passwordField.type === 'password') {
-        passwordField.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-      } else {
-        passwordField.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
+    // Debug: Check if scripts loaded
+    console.log('[HTML] Page loaded');
+    console.log('[HTML] Config loaded:', typeof getApiUrl !== 'undefined');
+
+    // Test button click
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('[HTML] DOM ready');
+      const btn = document.getElementById('sendOtpBtn');
+      console.log('[HTML] Send OTP button:', btn);
+      if (btn) {
+        btn.onclick = () => console.log('[HTML] Button clicked via onclick!');
       }
-    });
-
-    // Password Match Validation
-    document.getElementById('confirm_password').addEventListener('input', function () {
-      const password = document.getElementById('password').value;
-      const confirmPassword = this.value;
-      const matchDiv = document.getElementById('passwordMatch');
-
-      if (confirmPassword) {
-        matchDiv.style.display = 'block';
-        if (password === confirmPassword) {
-          matchDiv.innerHTML = '<small class="text-success"><i class="fas fa-check-circle me-1"></i>Passwords match</small>';
-        } else {
-          matchDiv.innerHTML = '<small class="text-danger"><i class="fas fa-times-circle me-1"></i>Passwords do not match</small>';
-        }
-      } else {
-        matchDiv.style.display = 'none';
-      }
-    });
-
-    // Progress Step Update (to be integrated with form validation)
-    function updateProgressStep(step) {
-      document.querySelectorAll('.progress-step').forEach((el, index) => {
-        if (index < step) {
-          el.classList.add('completed');
-          el.classList.remove('active');
-        } else if (index === step - 1) {
-          el.classList.add('active');
-          el.classList.remove('completed');
-        } else {
-          el.classList.remove('active', 'completed');
-        }
-      });
-    }
-
-    // Form submission loading state
-    document.getElementById('influencerRegistrationForm').addEventListener('submit', function () {
-      const submitBtn = document.getElementById('submitBtn');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Submitting...';
     });
   </script>
 </body>

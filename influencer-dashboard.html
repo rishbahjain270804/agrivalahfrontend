@@ -4,274 +4,597 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Influencer Dashboard - Cyano Veda</title>
+  <title>Influencer Dashboard - Agrivalah</title>
   <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --primary: #10b981;
+      --primary-dark: #059669;
+      --secondary: #6366f1;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --dark: #1f2937;
+      --light: #f9fafb;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      background-color: #f8f9fa;
-    }
-
-    .navbar-custom {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 15px 0;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      min-height: 100vh;
+      padding: 20px;
     }
 
-    .stat-card {
-      border-radius: 12px;
-      border: none;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s;
-      height: 100%;
+    .dashboard-container {
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
-    .stat-card:hover {
-      transform: translateY(-5px);
+    /* Header */
+    .dashboard-header {
+      background: white;
+      border-radius: 16px;
+      padding: 20px 30px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .stat-icon {
-      font-size: 2.5rem;
-      opacity: 0.8;
+    .header-left h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--dark);
+      margin: 0;
     }
 
-    .profile-card {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    .header-left p {
+      color: #6b7280;
+      margin: 5px 0 0 0;
+      font-size: 14px;
     }
 
-    .referral-code {
-      background: rgba(255, 255, 255, 0.2);
-      padding: 15px;
+    .header-right {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 10px 20px;
       border-radius: 8px;
-      font-size: 1.5rem;
-      font-weight: bold;
-      letter-spacing: 2px;
-      text-align: center;
-      margin: 15px 0;
-    }
-
-    .copy-btn {
-      background: rgba(255, 255, 255, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      color: white;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
       transition: all 0.3s;
+      font-size: 14px;
     }
 
-    .copy-btn:hover {
-      background: rgba(255, 255, 255, 0.5);
+    .btn-primary {
+      background: var(--primary);
       color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: white;
+      color: var(--dark);
+      border: 2px solid #e5e7eb;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Grid Layout */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Profile Card */
+    .profile-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 40px;
+      color: white;
+    }
+
+    .profile-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 5px;
+    }
+
+    .profile-type {
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 15px;
     }
 
     .status-badge {
-      padding: 6px 15px;
+      display: inline-block;
+      padding: 6px 16px;
       border-radius: 20px;
-      font-size: 0.9rem;
+      font-size: 12px;
       font-weight: 600;
+      text-transform: uppercase;
     }
 
-    .table-responsive {
-      border-radius: 8px;
+    .status-approved {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .profile-details {
+      margin-top: 25px;
+      text-align: left;
+    }
+
+    .profile-detail-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .profile-detail-item:last-child {
+      border-bottom: none;
+    }
+
+    .profile-detail-item i {
+      width: 30px;
+      color: var(--primary);
+    }
+
+    .profile-detail-item span {
+      color: #374151;
+      font-size: 14px;
+    }
+
+    /* Earnings Cards */
+    .earnings-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .earning-card {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: relative;
       overflow: hidden;
     }
 
-    .refresh-btn {
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+    .earning-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    .earning-label {
+      font-size: 13px;
+      color: #6b7280;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .earning-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 5px;
+    }
+
+    .earning-change {
+      font-size: 13px;
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    /* Referral Code Section */
+    .referral-section {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .referral-code-box {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .referral-code-label {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .referral-code {
+      font-size: 36px;
+      font-weight: 700;
       color: white;
+      letter-spacing: 4px;
+      margin-bottom: 15px;
+    }
+
+    .copy-code-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
       transition: all 0.3s;
     }
 
-    .refresh-btn:hover {
+    .copy-code-btn:hover {
       background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    .share-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .share-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: 2px solid #e5e7eb;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .share-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .share-btn.whatsapp {
+      border-color: #25d366;
+      color: #25d366;
+    }
+
+    .share-btn.whatsapp:hover {
+      background: #25d366;
       color: white;
     }
 
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      font-size: 24px;
+    }
+
+    .stat-icon.primary {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .stat-icon.success {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .stat-icon.warning {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .stat-icon.info {
+      background: #e0e7ff;
+      color: #3730a3;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: #6b7280;
+      font-weight: 600;
+    }
+
+    /* Recent Activity */
+    .activity-section {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .activity-list {
+      list-style: none;
+    }
+
+    .activity-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-info h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 5px;
+    }
+
+    .activity-info p {
+      font-size: 13px;
+      color: #6b7280;
+      margin: 0;
+    }
+
+    .activity-amount {
+      text-align: right;
+    }
+
+    .activity-amount .amount {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--success);
+      margin-bottom: 5px;
+    }
+
+    .activity-amount .status {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .status-completed {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    /* Loading State */
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #6b7280;
+    }
+
+    .loading i {
+      font-size: 32px;
+      margin-bottom: 10px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .earnings-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     @media (max-width: 768px) {
-      .stat-card {
-        margin-bottom: 15px;
+      body {
+        padding: 10px;
+      }
+
+      .dashboard-header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .share-buttons {
+        flex-direction: column;
       }
     }
   </style>
 </head>
 
 <body>
-  <!-- Navbar -->
-  <nav class="navbar-custom">
-    <div class="container-fluid">
-      <div class="d-flex justify-content-between align-items-center w-100">
-        <div>
-          <h4 class="mb-0">
-            <i class="fas fa-leaf me-2"></i>Cyano Veda Influencer Portal
-          </h4>
-          <small id="lastUpdated" class="opacity-75"></small>
-        </div>
-        <div class="d-flex align-items-center gap-3">
-          <button class="btn refresh-btn btn-sm" id="refreshBtn" title="Refresh Data">
-            <i class="fas fa-sync-alt"></i> Refresh
-          </button>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="autoRefreshToggle" checked>
-            <label class="form-check-label small text-white" for="autoRefreshToggle">Auto-refresh</label>
-          </div>
-          <button class="btn btn-outline-light btn-sm" id="influencerLogoutBtn">
-            <i class="fas fa-sign-out-alt me-1"></i>Logout
-          </button>
-        </div>
+  <div class="dashboard-container">
+    <!-- Header -->
+    <div class="dashboard-header">
+      <div class="header-left">
+        <h1><i class="fas fa-leaf"></i> Agrivalah Influencer</h1>
+        <p id="lastUpdated">Loading...</p>
       </div>
-    </div>
-  </nav>
-
-  <div class="container-fluid py-4">
-    <!-- Alert Container -->
-    <div id="alertContainer"></div>
-
-    <!-- Profile Section -->
-    <div class="row g-4 mb-4">
-      <div class="col-lg-4">
-        <div class="profile-card">
-          <div id="influencerProfile">
-            <div class="text-center">
-              <i class="fas fa-user-circle" style="font-size: 4rem;"></i>
-              <p class="mt-2">Loading profile...</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Statistics Cards -->
-      <div class="col-lg-8">
-        <div class="row g-3">
-          <div class="col-md-3 col-sm-6">
-            <div class="card stat-card">
-              <div class="card-body text-center">
-                <div class="stat-icon text-primary">
-                  <i class="fas fa-users"></i>
-                </div>
-                <h3 class="mb-0 mt-2" id="statTotalReferrals">0</h3>
-                <p class="text-muted mb-0">Total Referrals</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-sm-6">
-            <div class="card stat-card">
-              <div class="card-body text-center">
-                <div class="stat-icon text-success">
-                  <i class="fas fa-check-circle"></i>
-                </div>
-                <h3 class="mb-0 mt-2" id="statCompleted">0</h3>
-                <p class="text-muted mb-0">Completed</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-sm-6">
-            <div class="card stat-card">
-              <div class="card-body text-center">
-                <div class="stat-icon text-warning">
-                  <i class="fas fa-clock"></i>
-                </div>
-                <h3 class="mb-0 mt-2" id="statPending">0</h3>
-                <p class="text-muted mb-0">Pending</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-sm-6">
-            <div class="card stat-card">
-              <div class="card-body text-center">
-                <div class="stat-icon text-info">
-                  <i class="fas fa-rupee-sign"></i>
-                </div>
-                <h3 class="mb-0 mt-2" id="statEarnings">₹0</h3>
-                <p class="text-muted mb-0">Total Earnings</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quick Stats -->
-        <div class="card mt-3">
-          <div class="card-body">
-            <div class="row text-center">
-              <div class="col-4">
-                <h5 class="mb-0" id="statRevenue">₹0</h5>
-                <small class="text-muted">Revenue Generated</small>
-              </div>
-              <div class="col-4">
-                <h5 class="mb-0" id="statCommission">₹0</h5>
-                <small class="text-muted">Commission Earned</small>
-              </div>
-              <div class="col-4">
-                <h5 class="mb-0" id="statCouponUsage">0</h5>
-                <small class="text-muted">Coupon Usage</small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Referral Codes Section -->
-    <div class="card mb-4">
-      <div class="card-header bg-white">
-        <h5 class="mb-0"><i class="fas fa-ticket-alt me-2"></i>Your Referral Codes</h5>
-      </div>
-      <div class="card-body">
-        <div id="influencerCoupons">
-          <div class="text-center text-muted">
-            <i class="fas fa-spinner fa-spin fa-2x mb-2"></i>
-            <p>Loading referral codes...</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Recent Referrals -->
-    <div class="card mb-4">
-      <div class="card-header bg-white d-flex justify-content-between align-items-center">
-        <h5 class="mb-0"><i class="fas fa-list me-2"></i>Recent Referrals</h5>
-        <button class="btn btn-sm btn-success" id="exportReferralsBtn">
-          <i class="fas fa-file-excel me-1"></i>Export
+      <div class="header-right">
+        <button class="btn btn-outline" id="refreshBtn">
+          <i class="fas fa-sync-alt"></i> Refresh
+        </button>
+        <button class="btn btn-primary" id="logoutBtn">
+          <i class="fas fa-sign-out-alt"></i> Logout
         </button>
       </div>
-      <div class="card-body">
-        <div id="influencerRecentRegistrations">
-          <div class="text-center text-muted">
-            <i class="fas fa-spinner fa-spin fa-2x mb-2"></i>
-            <p>Loading referrals...</p>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="dashboard-grid">
+      <!-- Profile Card -->
+      <div class="profile-card" id="profileCard">
+        <div class="loading">
+          <i class="fas fa-spinner"></i>
+          <p>Loading profile...</p>
+        </div>
+      </div>
+
+      <!-- Earnings Grid -->
+      <div class="earnings-grid" id="earningsGrid">
+        <div class="earning-card">
+          <div class="loading">
+            <i class="fas fa-spinner"></i>
+          </div>
+        </div>
+        <div class="earning-card">
+          <div class="loading">
+            <i class="fas fa-spinner"></i>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Performance Chart (Placeholder) -->
-    <div class="card">
-      <div class="card-header bg-white">
-        <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Performance Overview</h5>
+    <!-- Referral Code Section -->
+    <div class="referral-section" id="referralSection">
+      <div class="loading">
+        <i class="fas fa-spinner"></i>
+        <p>Loading referral code...</p>
       </div>
-      <div class="card-body">
-        <div id="influencerPerformance">
-          <div class="row">
-            <div class="col-md-6">
-              <h6>Registration Status Breakdown</h6>
-              <div id="statusBreakdown"></div>
-            </div>
-            <div class="col-md-6">
-              <h6>Payment Information</h6>
-              <div id="paymentInfo"></div>
-            </div>
-          </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card">
+        <div class="loading">
+          <i class="fas fa-spinner"></i>
         </div>
       </div>
+      <div class="stat-card">
+        <div class="loading">
+          <i class="fas fa-spinner"></i>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="loading">
+          <i class="fas fa-spinner"></i>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="loading">
+          <i class="fas fa-spinner"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="activity-section">
+      <h3 class="section-title">
+        <i class="fas fa-history"></i>
+        Recent Referrals
+      </h3>
+      <ul class="activity-list" id="activityList">
+        <li class="loading">
+          <i class="fas fa-spinner"></i>
+          <p>Loading activity...</p>
+        </li>
+      </ul>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="/js/config.js"></script>
   <script src="/js/influencer-dashboard.js"></script>
 </body>
