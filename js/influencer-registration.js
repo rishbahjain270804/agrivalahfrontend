@@ -219,9 +219,9 @@ console.log('[Influencer Registration] Script loaded');
     sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
 
     try {
-      // Use VPS backend directly
-      const VPS_BACKEND = 'http://89.116.20.62:3002';
-      const otpUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/otp/send') : `${VPS_BACKEND}/api/otp/send`;
+      // Use HTTPS API subdomain
+      const API_BACKEND = 'https://api.agrivalah.in';
+      const otpUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/otp/send') : `${API_BACKEND}/api/otp/send`;
       console.log('[OTP] Sending request to:', otpUrl);
       
       const res = await fetch(otpUrl, {
@@ -304,9 +304,9 @@ console.log('[Influencer Registration] Script loaded');
     verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
     try {
-      // Use VPS backend directly
-      const VPS_BACKEND = 'http://89.116.20.62:3002';
-      const verifyUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/otp/verify') : `${VPS_BACKEND}/api/otp/verify`;
+      // Use HTTPS API subdomain
+      const API_BACKEND = 'https://api.agrivalah.in';
+      const verifyUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/otp/verify') : `${API_BACKEND}/api/otp/verify`;
       const res = await fetch(verifyUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -547,9 +547,9 @@ console.log('[Influencer Registration] Script loaded');
     });
 
     try {
-      // Use VPS backend directly
-      const VPS_BACKEND = 'http://89.116.20.62:3002';
-      const registerUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/influencers/register') : `${VPS_BACKEND}/api/influencers/register`;
+      // Use HTTPS API subdomain
+      const API_BACKEND = 'https://api.agrivalah.in';
+      const registerUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/influencers/register') : `${API_BACKEND}/api/influencers/register`;
       const res = await fetch(registerUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -48,9 +48,9 @@
 
   const apiRequest = async (endpoint, options = {}) => {
     try {
-      // Use VPS backend directly as fallback
-      const VPS_BACKEND = 'http://89.116.20.62:3002';
-      const url = typeof getApiUrl === 'function' ? getApiUrl(endpoint) : `${VPS_BACKEND}${endpoint}`;
+      // Use HTTPS API subdomain as fallback
+      const API_BACKEND = 'https://api.agrivalah.in';
+      const url = typeof getApiUrl === 'function' ? getApiUrl(endpoint) : `${API_BACKEND}${endpoint}`;
       console.log('[Admin Dashboard] API Request:', options.method || 'GET', url);
       const response = await fetch(url, {
         ...options,

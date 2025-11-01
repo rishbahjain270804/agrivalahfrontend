@@ -245,9 +245,9 @@
    * @returns {Promise<object>} Response data
    */
   async function apiRequest(url, options = {}) {
-    // Use VPS backend directly as fallback
-    const VPS_BACKEND = 'http://89.116.20.62:3002';
-    const fullUrl = typeof getApiUrl === 'function' ? getApiUrl(url) : `${VPS_BACKEND}${url}`;
+    // Use HTTPS API subdomain as fallback
+    const API_BACKEND = 'https://api.agrivalah.in';
+    const fullUrl = typeof getApiUrl === 'function' ? getApiUrl(url) : `${API_BACKEND}${url}`;
 
     const response = await fetch(fullUrl, {
       ...options,

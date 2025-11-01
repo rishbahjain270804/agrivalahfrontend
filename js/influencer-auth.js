@@ -3,17 +3,17 @@ console.log('[Influencer Auth] Script loaded');
 
 (() => {
   console.log('[Influencer Auth] Initializing...');
-  
+
   const form = document.getElementById('influencerLoginForm');
   const messageDiv = document.getElementById('influencerLoginMessage');
   const togglePasswordBtn = document.getElementById('togglePassword');
   const passwordInput = document.getElementById('influencerPassword');
-  
+
   if (!form) {
     console.error('[Influencer Auth] Form not found!');
     return;
   }
-  
+
   console.log('[Influencer Auth] Form found, attaching listeners');
 
   const showMessage = (message, type = 'info') => {
@@ -70,9 +70,9 @@ console.log('[Influencer Auth] Script loaded');
     showMessage('Signing in...', 'info');
 
     try {
-      // Use VPS backend directly as fallback
-      const VPS_BACKEND = 'http://89.116.20.62:3002';
-      const loginUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/auth/influencer-login') : `${VPS_BACKEND}/api/auth/influencer-login`;
+      // Use HTTPS API subdomain as fallback
+      const API_BACKEND = 'https://api.agrivalah.in';
+      const loginUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/auth/influencer-login') : `${API_BACKEND}/api/auth/influencer-login`;
       const response = await fetch(loginUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -98,7 +98,7 @@ console.log('[Influencer Auth] Script loaded');
       }
 
       showMessage('Login successful! Redirecting to your dashboard...', 'success');
-      
+
       setTimeout(() => {
         window.location.href = '/influencer/dashboard';
       }, 1000);

@@ -157,9 +157,9 @@
   }
 
   async function apiRequest(url, options = {}) {
-    // Use config.js helper if available, otherwise use VPS backend directly
-    const VPS_BACKEND = 'http://89.116.20.62:3002';
-    const fullUrl = typeof getApiUrl === 'function' ? getApiUrl(url) : `${VPS_BACKEND}${url}`;
+    // Use config.js helper if available, otherwise use HTTPS API subdomain
+    const API_BACKEND = 'https://api.agrivalah.in';
+    const fullUrl = typeof getApiUrl === 'function' ? getApiUrl(url) : `${API_BACKEND}${url}`;
     const response = await fetch(fullUrl, {
       ...options,
       credentials: 'include'

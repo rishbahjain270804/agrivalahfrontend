@@ -81,8 +81,8 @@ function getApiUrl(endpoint) {
     if (API_CONFIG.USE_LOCAL) {
         return `http://localhost:3002${endpoint}`;
     }
-    // Production: Frontend on Hostinger, Backend on VPS
-    return `http://89.116.20.62:3002${endpoint}`;
+    // Production: Use HTTPS API subdomain with SSL
+    return `https://api.agrivalah.in${endpoint}`;
 }
 
 // Helper function for API calls with credentials
