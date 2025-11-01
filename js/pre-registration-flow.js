@@ -357,13 +357,8 @@
       startResendCountdown(cooldown);
       startOtpCountdown(expiresIn);
 
-      // Show test OTP in development mode
-      if (result.testOtp) {
-        console.log(`[DEV] Test OTP: ${result.testOtp}`);
-        showAlert(`Test Mode: OTP is ${result.testOtp}`);
-      } else {
-        showAlert(`OTP sent to ${phone}. Please check your messages.`);
-      }
+      // Always show success message, never display test OTP
+      showAlert(`OTP sent to ${phone}. Please check your messages.`);
     } catch (error) {
       showAlert(error.message || 'Failed to send OTP');
       setButtonLoading(preElements.sendOtpBtn, false, '', 'Send OTP');

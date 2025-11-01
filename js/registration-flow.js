@@ -209,12 +209,8 @@
       startResendCountdown(cooldown);
       startOtpCountdown(expiresIn);
 
-      if (state.lastOtpHint) {
-        console.log(`[DEV] Test OTP: ${state.lastOtpHint}`);
-        showMessage('info', `Test Mode: OTP is ${state.lastOtpHint}`);
-      } else {
-        showMessage('success', `OTP sent to ${phone}. Please check your messages.`);
-      }
+      // Always show success message, never display test OTP
+      showMessage('success', `OTP sent to ${phone}. Please check your messages.`);
     } catch (error) {
       setStatusMessage(elements.phoneStatus, error.message, 'error');
       if (elements.sendOtpBtn) {

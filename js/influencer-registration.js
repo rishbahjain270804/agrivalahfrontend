@@ -253,12 +253,6 @@ console.log('[Influencer Registration] Script loaded');
         document.getElementById('contact_number').readOnly = true;
         sendBtn.innerHTML = '<i class="fas fa-redo me-1"></i>Resend OTP';
         
-        // Show test OTP if in development
-        if (result.testOtp) {
-          showMessage(`Test Mode: Your OTP is ${result.testOtp}`, 'info');
-          console.log('[OTP] Test OTP:', result.testOtp);
-        }
-        
         // Start timer
         let timeLeft = result.expiresIn || 300;
         const timer = setInterval(() => {
