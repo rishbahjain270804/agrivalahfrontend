@@ -25,7 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
     messageDiv.innerHTML = "<div class='alert alert-info'>Signing in...</div>";
 
     try {
-      const loginUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/auth/login') : '/api/auth/login';
+      // Use VPS backend directly as fallback
+      const VPS_BACKEND = 'http://89.116.20.62:3002';
+      const loginUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/auth/login') : `${VPS_BACKEND}/api/auth/login`;
       console.log('[Admin Auth] Login URL:', loginUrl);
       const response = await fetch(loginUrl, {
         method: 'POST',

@@ -53,7 +53,9 @@
   // Load all dashboard data
   async function loadDashboard() {
     try {
-      const getUrl = (endpoint) => typeof getApiUrl === 'function' ? getApiUrl(endpoint) : endpoint;
+      // Use VPS backend directly as fallback
+      const VPS_BACKEND = 'http://89.116.20.62:3002';
+      const getUrl = (endpoint) => typeof getApiUrl === 'function' ? getApiUrl(endpoint) : `${VPS_BACKEND}${endpoint}`;
 
       console.log('[Dashboard] Loading data...');
 

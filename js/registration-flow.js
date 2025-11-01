@@ -157,8 +157,9 @@
   }
 
   async function apiRequest(url, options = {}) {
-    // Use config.js helper if available, otherwise construct full URL
-    const fullUrl = typeof getApiUrl === 'function' ? getApiUrl(url) : url;
+    // Use config.js helper if available, otherwise use VPS backend directly
+    const VPS_BACKEND = 'http://89.116.20.62:3002';
+    const fullUrl = typeof getApiUrl === 'function' ? getApiUrl(url) : `${VPS_BACKEND}${url}`;
     const response = await fetch(fullUrl, {
       ...options,
       credentials: 'include'

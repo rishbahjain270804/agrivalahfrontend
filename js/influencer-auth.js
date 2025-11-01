@@ -70,7 +70,9 @@ console.log('[Influencer Auth] Script loaded');
     showMessage('Signing in...', 'info');
 
     try {
-      const loginUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/auth/influencer-login') : '/api/auth/influencer-login';
+      // Use VPS backend directly as fallback
+      const VPS_BACKEND = 'http://89.116.20.62:3002';
+      const loginUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/auth/influencer-login') : `${VPS_BACKEND}/api/auth/influencer-login`;
       const response = await fetch(loginUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

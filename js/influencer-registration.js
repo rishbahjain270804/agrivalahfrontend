@@ -219,7 +219,9 @@ console.log('[Influencer Registration] Script loaded');
     sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
 
     try {
-      const otpUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/otp/send') : '/api/otp/send';
+      // Use VPS backend directly
+      const VPS_BACKEND = 'http://89.116.20.62:3002';
+      const otpUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/otp/send') : `${VPS_BACKEND}/api/otp/send`;
       console.log('[OTP] Sending request to:', otpUrl);
       
       const res = await fetch(otpUrl, {
@@ -302,7 +304,9 @@ console.log('[Influencer Registration] Script loaded');
     verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
     try {
-      const verifyUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/otp/verify') : '/api/otp/verify';
+      // Use VPS backend directly
+      const VPS_BACKEND = 'http://89.116.20.62:3002';
+      const verifyUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/otp/verify') : `${VPS_BACKEND}/api/otp/verify`;
       const res = await fetch(verifyUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -543,7 +547,9 @@ console.log('[Influencer Registration] Script loaded');
     });
 
     try {
-      const registerUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/influencers/register') : '/api/influencers/register';
+      // Use VPS backend directly
+      const VPS_BACKEND = 'http://89.116.20.62:3002';
+      const registerUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/influencers/register') : `${VPS_BACKEND}/api/influencers/register`;
       const res = await fetch(registerUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

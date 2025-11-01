@@ -245,7 +245,9 @@
    * @returns {Promise<object>} Response data
    */
   async function apiRequest(url, options = {}) {
-    const fullUrl = typeof getApiUrl === 'function' ? getApiUrl(url) : url;
+    // Use VPS backend directly as fallback
+    const VPS_BACKEND = 'http://89.116.20.62:3002';
+    const fullUrl = typeof getApiUrl === 'function' ? getApiUrl(url) : `${VPS_BACKEND}${url}`;
 
     const response = await fetch(fullUrl, {
       ...options,

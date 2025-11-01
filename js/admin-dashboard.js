@@ -48,7 +48,9 @@
 
   const apiRequest = async (endpoint, options = {}) => {
     try {
-      const url = typeof getApiUrl === 'function' ? getApiUrl(endpoint) : endpoint;
+      // Use VPS backend directly as fallback
+      const VPS_BACKEND = 'http://89.116.20.62:3002';
+      const url = typeof getApiUrl === 'function' ? getApiUrl(endpoint) : `${VPS_BACKEND}${endpoint}`;
       console.log('[Admin Dashboard] API Request:', options.method || 'GET', url);
       const response = await fetch(url, {
         ...options,
