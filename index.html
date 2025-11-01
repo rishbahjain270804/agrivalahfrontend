@@ -144,19 +144,30 @@
             <!-- Statistics Banner -->
             <div class="container mt-5">
                 <div
-                    class="sm-hide border-white-op-3 p-40 py-4 rounded-1 bg-blur relative overflow-hidden wow fadeInUp">
+                    class="sm-hide border-white-op-3 p-40 py-5 rounded-1 bg-blur relative overflow-hidden wow fadeInUp"
+                    style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.15) 100%); 
+                           border: 3px solid rgba(16, 185, 129, 0.4) !important; 
+                           box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);">
                     <div class="gradient-edge-bottom color start-0 h-50 op-5"></div>
                     <div class="row g-4 justify-content-between align-items-center relative z-2">
                         <div class="col-lg-3">
-                            <h2 class="mb-0">50,000+ Farmers</h2>
-                            <h4 class="mb-0">Already Certified</h4>
+                            <div class="text-center" style="animation: pulse 2s infinite;">
+                                <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
+                                            padding: 20px; border-radius: 15px; 
+                                            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);">
+                                    <i class="icofont-check-circled" style="font-size: 48px; color: white; margin-bottom: 10px;"></i>
+                                    <h1 class="mb-0" style="color: white; font-size: 42px; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">50,000+</h1>
+                                    <h3 class="mb-0" style="color: white; font-weight: 600;">Farmers</h3>
+                                    <h4 class="mb-0" style="color: rgba(255,255,255,0.95); font-weight: 500;">Already Certified</h4>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="d-flex align-items-center">
                                 <i class="fs-60 icofont-rupee id-color me-3"></i>
                                 <div>
-                                    <h4 class="mb-0">₹300 Only</h4>
-                                    <p class="mb-0">Registration Fee</p>
+                                    <h4 class="mb-0">₹324 Only</h4>
+                                    <p class="mb-0">Registration Fee (incl. 8% GST)</p>
                                 </div>
                             </div>
                         </div>
@@ -171,6 +182,13 @@
                     </div>
                 </div>
             </div>
+            
+            <style>
+                @keyframes pulse {
+                    0%, 100% { transform: scale(1); }
+                    50% { transform: scale(1.05); }
+                }
+            </style>
     </div>
     </section>
 
@@ -541,8 +559,8 @@
                                     <div class="price-section">
                                         <div class="price-badge d-inline-block px-3 py-1 mb-2"
                                             style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 25px; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);">
-                                            <span class="fs-32 fw-bold text-white">₹300</span>
-                                            <span class="fs-12 text-white-op-8 ms-1">only</span>
+                                            <span class="fs-32 fw-bold text-white">₹324</span>
+                                            <span class="fs-12 text-white-op-8 ms-1">incl. GST</span>
                                         </div>
                                         <p class="fs-14 text-white-op-8 mb-3">Registration, Certification & Support Fee
                                         </p>
@@ -680,7 +698,7 @@
                             <div class="text-center">
                                 <div class="mb-3">
                                     <h4 class="text-white">Amount to Pay: <span id="pre-amount-display"
-                                            class="text-success">₹300</span></h4>
+                                            class="text-success">₹324</span></h4>
                                 </div>
                                 <button type="button" class="btn btn-success btn-lg px-5" id="proceed-to-payment-btn"
                                     disabled>
@@ -891,8 +909,8 @@
                                             Date</label>
                                         <input type="date" class="form-control" id="harvesting-date">
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="crop-types" class="form-label text-white">Crop Type(s) *</label>
+                                    <div class="col-md-12">
+                                        <label for="crop-types" class="form-label text-white">Main Crop Type(s) *</label>
                                         <select class="form-control" id="crop-types" required>
                                             <option value="">Select Crop Type</option>
                                             <option value="cereals">Cereals (Rice, Wheat, Maize)</option>
@@ -907,12 +925,45 @@
                                             <option value="other">Other (Specify Below)</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-6" id="other-crop-container" style="display: none;">
-                                        <label for="other-crop-type" class="form-label text-white">Specify Crop Type
-                                            *</label>
+                                    <div class="col-md-12" id="other-crop-container" style="display: none;">
+                                        <label for="other-crop-type" class="form-label text-white">Specify Crop Type *</label>
                                         <input type="text" class="form-control" id="other-crop-type"
                                             placeholder="Enter your crop type">
                                     </div>
+                                    
+                                    <!-- Multiple Crops Section -->
+                                    <div class="col-md-12 mt-4">
+                                        <label class="form-label text-white">Detailed Crop Information (Optional)</label>
+                                        <div id="crops-container" style="margin-top: 10px;">
+                                            <!-- Crop items will be added here -->
+                                        </div>
+                                        <button type="button" class="btn btn-outline-light btn-sm mt-2" id="addCropBtn">
+                                            <i class="fa fa-plus"></i> Add Crop Details
+                                        </button>
+                                        <small class="text-white-50 d-block mt-1">Add specific details for each crop you grow</small>
+                                    </div>
+
+                                    <!-- Crop Template (hidden) -->
+                                    <template id="crop-template">
+                                        <div class="crop-item" style="border: 1px solid rgba(255,255,255,0.2); padding: 12px; border-radius: 8px; margin-bottom: 12px; background: rgba(255,255,255,0.05);">
+                                            <div class="row g-2">
+                                                <div class="col-md-5">
+                                                    <input type="text" class="form-control crop-name" placeholder="Crop Name *">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control crop-area" placeholder="Area (acres)">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control crop-variety" placeholder="Variety">
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <button type="button" class="btn btn-danger btn-sm remove-crop-btn" style="width: 100%;">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
                                 </div>
                             </div>
 
@@ -1450,7 +1501,7 @@
                                 </a>
                             </p>
                             <p class="mb-0" style="line-height: 1.8;">
-                                <a href="mailto:mail.cyano@gmail.com?subject=Inquiry%20about%20Natural%20Farming%20Certification&body=Hello%20Agrivalah%20Team,%0D%0A%0D%0AI%20would%20like%20to%20know%20more%20about..."
+                                <a href="mailto:Agrivalah@gmail.com?subject=Inquiry%20about%20Natural%20Farming%20Certification&body=Hello%20Agrivalah%20Team,%0D%0A%0D%0AI%20would%20like%20to%20know%20more%20about%20Natural%20Farming%20Certification."
                                     class="btn btn-outline-light d-inline-flex align-items-center px-4 py-2"
                                     style="border: 2px solid #10b981; border-radius: 8px; font-weight: 600; transition: all 0.3s ease;">
                                     <i class="fa fa-envelope me-2"></i>
@@ -1489,6 +1540,28 @@
     <script src="js/custom-marquee.js"></script>
 
     <script src="js/pre-registration-flow.js"></script>
+
+    <!-- Crop Template (hidden) -->
+    <template id="crop-template">
+        <div class="crop-item" style="border: 1px solid rgba(255,255,255,0.2); padding: 12px; border-radius: 8px; margin-bottom: 12px; background: rgba(255,255,255,0.05);">
+            <div class="row g-2">
+                <div class="col-md-5">
+                    <input type="text" class="form-control form-control-sm crop-name" placeholder="Crop Name *" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control form-control-sm crop-area" placeholder="Area (acres)">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control form-control-sm crop-variety" placeholder="Variety">
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-danger btn-sm remove-crop-btn" style="width: 100%;">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
 
     <script>
         // Show/hide other crop type field

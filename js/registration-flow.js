@@ -28,7 +28,7 @@
 
   const state = {
     otpLength: OTP_LENGTH,
-    amount: 300,
+    amount: 324,
     couponCode: '',
     otpToken: null,
     referenceId: null,
@@ -70,10 +70,14 @@
     else target.classList.add('text-muted');
   }
 
-  function updateAmountDisplay(amount) {
+  function updateAmountDisplay(amount, gstInfo = null) {
     state.amount = amount;
     if (elements.amountDisplay) {
-      elements.amountDisplay.textContent = `₹${amount}`;
+      if (gstInfo && gstInfo.gst) {
+        elements.amountDisplay.innerHTML = `₹${amount} <small class="text-muted">(incl. ₹${gstInfo.gst} GST)</small>`;
+      } else {
+        elements.amountDisplay.textContent = `₹${amount}`;
+      }
     }
     if (elements.submitBtn) {
       elements.submitBtn.innerHTML = `<i class="fa fa-check me-2"></i> Pay ₹${amount} & Submit`;
@@ -277,6 +281,20 @@
     }
   }
 
+  function collectCrops() {
+    const crops = [];
+    document.querySelectorAll('.crop-item').forEach(item => {
+      const name = item.querySelector('.crop-name').value.trim();
+      const area = item.querySelector('.crop-area').value.trim();
+      const variety = item.querySelector('.crop-variety').value.trim();
+      
+      if (name) {
+        crops.push({ name, area, variety });
+      }
+    });
+    return crops;
+  }
+
   function collectFormData() {
     const getValue = (id) => {
       const el = document.getElementById(id);
@@ -306,6 +324,7 @@
       sowingDate: getValue('sowing-date'),
       harvestingDate: getValue('harvesting-date'),
       cropTypes: getValue('crop-types'),
+      crops: collectCrops(),
       farmingPractice: getRadioValue('farming-practice'),
       farmingExperience: getValue('farming-experience'),
       irrigationSource: getRadioValue('irrigation-source'),
@@ -358,7 +377,7 @@
     const trimmed = value.trim();
     if (!trimmed) {
       state.couponCode = '';
-      updateAmountDisplay(300);
+      updateAmountDisplay(324);
       setStatusMessage(elements.couponStatus, '');
       return;
     }
@@ -371,18 +390,19 @@
       const result = await fetch(couponUrl, { credentials: 'include' }).then((res) => res.json());
       if (result && result.valid) {
         state.couponCode = trimmed;
-        const amount = result.amount || 250;
-        updateAmountDisplay(amount);
-        const label = result.influencerName ? `Coupon applied. Influencer: ${result.influencerName}` : 'Coupon applied.';
+        const amount = result.amount || 270;
+        updateAmountDisplay(amount, { gst: result.gst, baseAmount: result.baseAmount });
+        const discountText = result.discount ? ` (₹${result.discount} off)` : '';
+        const label = result.influencerName ? `✓ Coupon applied${discountText}. Influencer: ${result.influencerName}` : 'Coupon applied.';
         setStatusMessage(elements.couponStatus, label, 'success');
       } else {
         state.couponCode = '';
-        updateAmountDisplay(300);
+        updateAmountDisplay(324);
         setStatusMessage(elements.couponStatus, 'Invalid referral code.', 'error');
       }
     } catch (error) {
       state.couponCode = '';
-      updateAmountDisplay(300);
+      updateAmountDisplay(324);
       setStatusMessage(elements.couponStatus, error.message || 'Unable to validate coupon.', 'error');
     }
   }
@@ -512,7 +532,7 @@
     state.couponCode = '';
     state.sessionExpiresAt = null;
     state.lastOtpHint = null;
-    updateAmountDisplay(300);
+    updateAmountDisplay(324);
     showMessage('success', 'Registration completed successfully! Our team will contact you shortly.');
     setStatusMessage(elements.couponStatus, '');
     setStatusMessage(elements.otpStatus, '');
@@ -615,4 +635,24 @@
   }
 
   updateAmountDisplay(state.amount);
+
+  // Multiple Crops Management
+  const cropsContainer = document.getElementById('crops-container');
+  const addCropBtn = document.getElementById('addCropBtn');
+  const cropTemplate = document.getElementById('crop-template');
+
+  if (addCropBtn && cropTemplate && cropsContainer) {
+    addCropBtn.addEventListener('click', () => {
+      const clone = cropTemplate.content.cloneNode(true);
+      const cropItem = clone.querySelector('.crop-item');
+      
+      // Add remove button handler
+      const removeBtn = cropItem.querySelector('.remove-crop-btn');
+      removeBtn.addEventListener('click', function() {
+        cropItem.remove();
+      });
+      
+      cropsContainer.appendChild(cropItem);
+    });
+  }
 })();

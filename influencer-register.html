@@ -374,6 +374,19 @@
             </div>
 
             <div class="form-group">
+              <label class="form-label required">Category</label>
+              <select class="form-select" id="influencer_type" required>
+                <option value="">Select Category</option>
+                <option value="Social Media Influencer">Social Media Influencer</option>
+                <option value="Media">Media</option>
+                <option value="Celebrity">Celebrity</option>
+              </select>
+              <small class="form-text">Choose the category that best describes you</small>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
               <label class="form-label required">Influencer Type</label>
               <select class="form-select" id="type" required>
                 <option value="">Select type</option>
@@ -404,9 +417,9 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label">Email Address</label>
-              <input type="email" class="form-control" id="email" placeholder="your.email@example.com">
-              <small class="form-text">Optional, for notifications</small>
+              <label class="form-label required">Email Address</label>
+              <input type="email" class="form-control" id="email" required placeholder="your.email@example.com">
+              <small class="form-text">Required for notifications and updates</small>
             </div>
           </div>
 
@@ -461,7 +474,56 @@
               <small class="form-text">YouTube, Facebook, Instagram, etc.</small>
             </div>
           </div>
+
+          <!-- Social Media Handles Section -->
+          <div class="form-group">
+            <label class="form-label">Social Media Handles</label>
+            <div id="social-handles-container">
+              <!-- Social media handle inputs will be added here -->
+            </div>
+            <button type="button" class="btn btn-outline" id="addSocialHandleBtn" style="margin-top: 10px;">
+              <i class="fas fa-plus"></i> Add Social Media Handle
+            </button>
+            <small class="form-text">Add your social media profiles to showcase your reach</small>
+          </div>
         </div>
+
+        <!-- Social Media Handle Template (hidden) -->
+        <template id="social-handle-template">
+          <div class="social-handle-item" style="border: 1px solid #e2e8f0; padding: 16px; border-radius: 8px; margin-bottom: 16px; background: #f9fafb;">
+            <div class="row" style="display: grid; grid-template-columns: 1fr 2fr 1fr auto; gap: 10px; align-items: end;">
+              <div>
+                <label class="form-label">Platform *</label>
+                <select class="form-select social-platform" required>
+                  <option value="">Select Platform</option>
+                  <option value="YouTube">YouTube</option>
+                  <option value="Instagram">Instagram</option>
+                  <option value="Facebook">Facebook</option>
+                  <option value="Twitter/X">Twitter/X</option>
+                  <option value="LinkedIn">LinkedIn</option>
+                  <option value="TikTok">TikTok</option>
+                  <option value="Telegram">Telegram</option>
+                  <option value="WhatsApp">WhatsApp Channel</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Handle/Username *</label>
+                <input type="text" class="form-control social-handle" required placeholder="@username or profile URL">
+              </div>
+              <div>
+                <label class="form-label">Followers</label>
+                <input type="number" class="form-control social-followers" min="0" placeholder="0">
+              </div>
+              <div>
+                <label class="form-label">&nbsp;</label>
+                <button type="button" class="btn btn-danger btn-sm remove-handle-btn" style="width: 100%; padding: 12px;">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </template>
 
         <!-- Payment Information -->
         <div class="form-section">

@@ -59,18 +59,20 @@
 
       console.log('[Dashboard] Loading data...');
 
-      const [profileRes, statsRes, registrationsRes, couponsRes] = await Promise.all([
+      const [profileRes, statsRes, registrationsRes, couponsRes, messagesRes] = await Promise.all([
         fetch(getUrl('/api/influencer/profile'), { credentials: 'include' }),
         fetch(getUrl('/api/influencer/dashboard'), { credentials: 'include' }),
         fetch(getUrl('/api/influencer/registrations?limit=10'), { credentials: 'include' }),
-        fetch(getUrl('/api/influencer/coupons'), { credentials: 'include' })
+        fetch(getUrl('/api/influencer/coupons'), { credentials: 'include' }),
+        fetch(getUrl('/api/influencer/messages'), { credentials: 'include' })
       ]);
 
       console.log('[Dashboard] Responses received:', {
         profile: profileRes.status,
         stats: statsRes.status,
         registrations: registrationsRes.status,
-        coupons: couponsRes.status
+        coupons: couponsRes.status,
+        messages: messagesRes.status
       });
 
       const profile = await profileRes.json();
@@ -85,11 +87,15 @@
       const coupons = await couponsRes.json();
       console.log('[Dashboard] Coupons data:', coupons);
 
+      const messages = await messagesRes.json();
+      console.log('[Dashboard] Messages data:', messages);
+
       console.log('[Dashboard] Data parsed:', {
         profile: profile.success,
         stats: stats.success,
         registrations: registrations.success,
-        coupons: coupons.success
+        coupons: coupons.success,
+        messages: messages.success
       });
 
       if (!profile.success) {
@@ -108,12 +114,19 @@
         console.error('[Dashboard] Coupons error:', coupons.message);
         throw new Error('Coupons: ' + (coupons.message || 'Failed'));
       }
+      if (!messages.success) {
+        console.error('[Dashboard] Messages error:', messages.message);
+        // Don't throw error for messages, just log it
+        console.warn('[Dashboard] Messages failed to load, continuing anyway');
+      }
 
       dashboardData = {
         profile: profile.influencer,
         stats: stats.stats,
         registrations: registrations.registrations,
-        coupons: coupons.coupons
+        coupons: coupons.coupons,
+        messages: messages.success ? messages.messages : [],
+        unreadCount: messages.success ? messages.unreadCount : 0
       };
 
       console.log('[Dashboard] Data loaded successfully');
@@ -131,8 +144,91 @@
     renderEarnings();
     renderReferralCode();
     renderStats();
+    renderMessages();
     renderActivity();
   }
+
+  // Render messages
+  function renderMessages() {
+    const messages = dashboardData.messages || [];
+    const unreadCount = dashboardData.unreadCount || 0;
+    const messagesContainer = document.getElementById('messagesContainer');
+    const unreadBadge = document.getElementById('unreadCount');
+
+    // Update unread count
+    if (unreadCount > 0) {
+      unreadBadge.textContent = unreadCount;
+      unreadBadge.style.display = 'inline-block';
+      document.title = `(${unreadCount}) Agrivalah - Influencer Dashboard`;
+    } else {
+      unreadBadge.style.display = 'none';
+      document.title = 'Agrivalah - Influencer Dashboard';
+    }
+
+    if (!messages || messages.length === 0) {
+      messagesContainer.innerHTML = `
+        <p style="text-align: center; padding: 20px; color: #6b7280;">
+          <i class="fas fa-inbox" style="font-size: 32px; margin-bottom: 10px; opacity: 0.3; display: block;"></i>
+          No messages yet
+        </p>
+      `;
+      return;
+    }
+
+    messagesContainer.innerHTML = messages.map(msg => {
+      const isUnread = !msg.read;
+      return `
+        <div class="message-item" style="padding: 16px; 
+             border-left: 4px solid ${isUnread ? '#10b981' : '#e2e8f0'}; 
+             margin-bottom: 12px; 
+             background: ${isUnread ? '#f0fdf4' : '#f9fafb'};
+             border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items-start;">
+            <div style="flex: 1;">
+              <p style="margin: 0; color: #1a202c; font-size: 15px;">${escapeHtml(msg.message)}</p>
+              <small style="color: #6b7280; margin-top: 6px; display: block;">
+                <i class="far fa-clock"></i> ${formatDate(msg.sent_at || msg.sentAt)}
+              </small>
+            </div>
+            ${isUnread ? `
+              <button class="btn btn-sm" onclick="markAsRead('${msg._id}')" 
+                      style="background: #10b981; color: white; padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer;">
+                <i class="fas fa-check"></i> Mark as Read
+              </button>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Helper function to escape HTML
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // Mark Message as Read
+  window.markAsRead = async function(messageId) {
+    try {
+      const API_BACKEND = 'https://api.agrivalah.in';
+      const apiUrl = typeof getApiUrl === 'function' 
+        ? getApiUrl(`/api/influencer/messages/${messageId}/read`) 
+        : `${API_BACKEND}/api/influencer/messages/${messageId}/read`;
+      
+      const res = await fetch(apiUrl, {
+        method: 'POST',
+        credentials: 'include'
+      });
+      
+      if (res.ok) {
+        await loadDashboard(); // Refresh messages
+      }
+    } catch (error) {
+      console.error('Error marking message as read:', error);
+    }
+  };
 
   // Render profile card
   function renderProfile() {

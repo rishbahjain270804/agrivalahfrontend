@@ -511,6 +511,57 @@ console.log('[Influencer Registration] Script loaded');
     }
   });
 
+  // Social Media Handles Management
+  const socialHandlesContainer = document.getElementById('social-handles-container');
+  const addSocialHandleBtn = document.getElementById('addSocialHandleBtn');
+  const socialHandleTemplate = document.getElementById('social-handle-template');
+
+  // Add first handle by default
+  if (socialHandlesContainer && addSocialHandleBtn && socialHandleTemplate) {
+    addSocialHandle();
+    addSocialHandleBtn.addEventListener('click', addSocialHandle);
+  }
+
+  function addSocialHandle() {
+    if (!socialHandleTemplate || !socialHandlesContainer) return;
+    
+    const clone = socialHandleTemplate.content.cloneNode(true);
+    const handleItem = clone.querySelector('.social-handle-item');
+    
+    // Add remove button handler
+    const removeBtn = handleItem.querySelector('.remove-handle-btn');
+    removeBtn.addEventListener('click', function() {
+      // Keep at least one handle
+      if (socialHandlesContainer.querySelectorAll('.social-handle-item').length > 1) {
+        handleItem.remove();
+      } else {
+        alert('At least one social media handle is recommended');
+        handleItem.remove(); // Allow removal anyway
+      }
+    });
+    
+    socialHandlesContainer.appendChild(handleItem);
+  }
+
+  // Collect social media handles
+  function collectSocialHandles() {
+    const handles = [];
+    document.querySelectorAll('.social-handle-item').forEach(item => {
+      const platform = item.querySelector('.social-platform').value;
+      const handle = item.querySelector('.social-handle').value.trim();
+      const followers = item.querySelector('.social-followers').value;
+      
+      if (platform && handle) {
+        handles.push({
+          platform,
+          handle,
+          followers: parseInt(followers) || 0
+        });
+      }
+    });
+    return handles;
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -530,8 +581,10 @@ console.log('[Influencer Registration] Script loaded');
       name: document.getElementById('name').value.trim(),
       contactNumber: document.getElementById('contact_number').value.trim(),
       password: document.getElementById('password').value,
-      email: document.getElementById('email').value.trim() || null,
+      email: document.getElementById('email').value.trim(),
+      influencerType: document.getElementById('influencer_type').value,
       type: document.getElementById('type').value,
+      socialMediaHandles: collectSocialHandles(),
       socialLink: document.getElementById('social_link').value.trim() || null,
       region: document.getElementById('region').value.trim(),
       upiId: document.getElementById('upi_id').value.trim(),

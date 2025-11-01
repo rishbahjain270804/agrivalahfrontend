@@ -500,8 +500,14 @@
           <td>${formatCurrency(earnings)}</td>
           <td><span class="badge badge-success">Active</span></td>
           <td>
-            <button class="btn btn-sm btn-primary" onclick="window.viewInfluencerDetails('${inf.id}')">
+            <button class="btn btn-sm btn-primary me-1" onclick="window.viewInfluencerDetails('${inf.id}')">
               <i class="fas fa-eye"></i>
+            </button>
+            <button class="btn btn-sm btn-secondary me-1" onclick="window.showAssignCouponModal('${inf.id}')" title="Assign Coupon">
+              <i class="fas fa-ticket-alt"></i>
+            </button>
+            <button class="btn btn-sm btn-info" onclick="window.showSendMessageModal('${inf.id}')" title="Send Message">
+              <i class="fas fa-envelope"></i>
             </button>
           </td>
         </tr>
@@ -1042,7 +1048,7 @@
           </div>
           <div class="col-md-6">
             <label class="form-label">Payment Amount *</label>
-            <input type="number" class="form-control" name="payment_amount" value="300" required>
+            <input type="number" class="form-control" name="payment_amount" value="324" required>
           </div>
           <div class="col-md-6">
             <label class="form-label">Payment Status *</label>
@@ -1165,7 +1171,7 @@
       area_natural_farming: '3',
       crop_types: 'Rice, Wheat',
       farming_practice: 'Natural',
-      payment_amount: '300',
+      payment_amount: '324',
       payment_status: 'completed',
       coupon_code: ''
     }];
@@ -1216,6 +1222,124 @@
     };
     reader.readAsArrayBuffer(file);
   };
+
+  // ============================================================================
+  // COUPON ASSIGNMENT & MESSAGING
+  // ============================================================================
+
+  // Assign Coupon Code
+  window.showAssignCouponModal = (influencerId) => {
+    document.getElementById('couponInfluencerId').value = influencerId;
+    document.getElementById('customCouponCode').value = '';
+    document.getElementById('couponCommissionAmount').value = '50';
+    document.getElementById('couponDiscountType').value = 'flat';
+    document.getElementById('couponDiscountValue').value = '50';
+    
+    const modal = new bootstrap.Modal(document.getElementById('assignCouponModal'));
+    modal.show();
+  };
+
+  document.getElementById('confirmAssignCouponBtn')?.addEventListener('click', async () => {
+    const influencerId = document.getElementById('couponInfluencerId').value;
+    const customCode = document.getElementById('customCouponCode').value.trim();
+    const commissionAmount = document.getElementById('couponCommissionAmount').value;
+    const discountType = document.getElementById('couponDiscountType').value;
+    const discountValue = document.getElementById('couponDiscountValue').value;
+    
+    try {
+      const response = await apiRequest(`/api/admin/influencers/${influencerId}/assign-coupon`, {
+        method: 'POST',
+        body: JSON.stringify({
+          customCode: customCode || null,
+          commissionAmount: parseInt(commissionAmount),
+          discountType,
+          discountValue: parseFloat(discountValue)
+        })
+      });
+      
+      if (response.success) {
+        showAlert(`Coupon code assigned: ${response.couponCode}`, 'success');
+        bootstrap.Modal.getInstance(document.getElementById('assignCouponModal')).hide();
+        loadInfluencers();
+      } else {
+        showAlert(response.message || 'Failed to assign coupon', 'danger');
+      }
+    } catch (error) {
+      showAlert('Error: ' + error.message, 'danger');
+    }
+  });
+
+  // Send Message to Influencer
+  window.showSendMessageModal = (influencerId) => {
+    document.getElementById('messageInfluencerId').value = influencerId;
+    document.getElementById('influencerMessage').value = '';
+    
+    const modal = new bootstrap.Modal(document.getElementById('sendMessageModal'));
+    modal.show();
+  };
+
+  document.getElementById('confirmSendMessageBtn')?.addEventListener('click', async () => {
+    const influencerId = document.getElementById('messageInfluencerId').value;
+    const message = document.getElementById('influencerMessage').value.trim();
+    
+    if (!message) {
+      showAlert('Please enter a message', 'warning');
+      return;
+    }
+    
+    try {
+      const response = await apiRequest(`/api/admin/influencers/${influencerId}/send-message`, {
+        method: 'POST',
+        body: JSON.stringify({ message })
+      });
+      
+      if (response.success) {
+        showAlert('Message sent successfully!', 'success');
+        bootstrap.Modal.getInstance(document.getElementById('sendMessageModal')).hide();
+      } else {
+        showAlert(response.message || 'Failed to send message', 'danger');
+      }
+    } catch (error) {
+      showAlert('Error: ' + error.message, 'danger');
+    }
+  });
+
+  // Broadcast Message
+  window.showBroadcastModal = () => {
+    document.getElementById('broadcastMessage').value = '';
+    document.getElementById('broadcastFilter').value = 'approved';
+    
+    const modal = new bootstrap.Modal(document.getElementById('broadcastMessageModal'));
+    modal.show();
+  };
+
+  document.getElementById('confirmBroadcastBtn')?.addEventListener('click', async () => {
+    const message = document.getElementById('broadcastMessage').value.trim();
+    const filterValue = document.getElementById('broadcastFilter').value;
+    
+    if (!message) {
+      showAlert('Please enter a message', 'warning');
+      return;
+    }
+    
+    const filter = filterValue === 'all' ? null : { approvalStatus: filterValue };
+    
+    try {
+      const response = await apiRequest('/api/admin/influencers/broadcast', {
+        method: 'POST',
+        body: JSON.stringify({ message, filter })
+      });
+      
+      if (response.success) {
+        showAlert(`Message sent to ${response.count} influencer(s)!`, 'success');
+        bootstrap.Modal.getInstance(document.getElementById('broadcastMessageModal')).hide();
+      } else {
+        showAlert(response.message || 'Failed to send broadcast', 'danger');
+      }
+    } catch (error) {
+      showAlert('Error: ' + error.message, 'danger');
+    }
+  });
 
   // ============================================================================
   // EVENT LISTENERS

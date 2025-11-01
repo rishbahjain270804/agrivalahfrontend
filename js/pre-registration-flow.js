@@ -18,8 +18,8 @@
     OTP_LENGTH: 4,
     RESEND_COOLDOWN_SECONDS: 60,
     PHONE_REGEX: /^[6-9]\d{9}$/,
-    DEFAULT_AMOUNT: 300,
-    DISCOUNTED_AMOUNT: 250,
+    DEFAULT_AMOUNT: 324,
+    DISCOUNTED_AMOUNT: 270,
     COUPON_DEBOUNCE_MS: 500
   };
 
@@ -93,10 +93,14 @@
    * Update amount display in UI
    * @param {number} amount - Amount to display
    */
-  function updateAmountDisplay(amount) {
+  function updateAmountDisplay(amount, gstInfo = null) {
     state.amount = amount;
     if (preElements.amountDisplay) {
-      preElements.amountDisplay.textContent = `₹${amount}`;
+      if (gstInfo && gstInfo.gst) {
+        preElements.amountDisplay.innerHTML = `₹${amount} <small class="text-muted">(incl. ₹${gstInfo.gst} GST)</small>`;
+      } else {
+        preElements.amountDisplay.textContent = `₹${amount}`;
+      }
     }
     if (preElements.buttonAmount) {
       preElements.buttonAmount.textContent = `₹${amount}`;
@@ -290,11 +294,12 @@
       if (result && result.valid) {
         state.couponCode = trimmed;
         const amount = result.amount || CONFIG.DISCOUNTED_AMOUNT;
-        updateAmountDisplay(amount);
+        updateAmountDisplay(amount, { gst: result.gst, baseAmount: result.baseAmount });
 
+        const savings = CONFIG.DEFAULT_AMOUNT - amount;
         const label = result.influencerName
-          ? `✓ Coupon applied! Influencer: ${result.influencerName}. You save ₹${CONFIG.DEFAULT_AMOUNT - amount}!`
-          : `✓ Coupon applied! You save ₹${CONFIG.DEFAULT_AMOUNT - amount}!`;
+          ? `✓ Coupon applied! Influencer: ${result.influencerName}. You save ₹${savings}!`
+          : `✓ Coupon applied! You save ₹${savings}!`;
 
         setStatusMessage(preElements.couponStatus, label, 'success');
       } else {
