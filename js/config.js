@@ -81,7 +81,15 @@ function getApiUrl(endpoint) {
     if (API_CONFIG.USE_LOCAL) {
         return `http://localhost:3002${endpoint}`;
     }
-    // Production: Use HTTPS API subdomain with SSL
+    
+    // Check if we're on Vercel frontend
+    const hostname = window.location.hostname;
+    if (hostname.includes('vercel.app') || hostname.includes('agrivalahfrontend')) {
+        // Use Vercel backend
+        return `https://agrivalahbackend.vercel.app${endpoint}`;
+    }
+    
+    // Production: Use HTTPS API subdomain with SSL (Hostinger VPS)
     return `https://api.agrivalah.in${endpoint}`;
 }
 

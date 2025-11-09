@@ -71,8 +71,7 @@ console.log('[Influencer Auth] Script loaded');
 
     try {
       // Use HTTPS API subdomain as fallback
-      const API_BACKEND = 'https://api.agrivalah.in';
-      const loginUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/auth/influencer-login') : `${API_BACKEND}/api/auth/influencer-login`;
+      const API_BACKEND = 'https://agrivalahbackend.vercel.app';      const loginUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/auth/influencer-login') : `${API_BACKEND}/api/auth/influencer-login`;
       const response = await fetch(loginUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

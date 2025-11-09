@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/admin",
+      "dest": "/admin-login.html"
+    },
+    {
+      "src": "/admin/dashboard",
+      "dest": "/admin-dashboard.html"
+    },
+    {
+      "src": "/influencer",
+      "dest": "/influencer-login.html"
+    },
+    {
+      "src": "/influencer/dashboard",
+      "dest": "/influencer-dashboard.html"
+    },
+    {
+      "src": "/influencer/register",
+      "dest": "/influencer-register.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
+}

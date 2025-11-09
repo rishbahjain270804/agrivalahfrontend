@@ -220,8 +220,7 @@ console.log('[Influencer Registration] Script loaded');
 
     try {
       // Use HTTPS API subdomain
-      const API_BACKEND = 'https://api.agrivalah.in';
-      const otpUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/otp/send') : `${API_BACKEND}/api/otp/send`;
+      const API_BACKEND = 'https://agrivalahbackend.vercel.app';      const otpUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/otp/send') : `${API_BACKEND}/api/otp/send`;
       console.log('[OTP] Sending request to:', otpUrl);
       
       const res = await fetch(otpUrl, {
@@ -299,8 +298,7 @@ console.log('[Influencer Registration] Script loaded');
 
     try {
       // Use HTTPS API subdomain
-      const API_BACKEND = 'https://api.agrivalah.in';
-      const verifyUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/otp/verify') : `${API_BACKEND}/api/otp/verify`;
+      const API_BACKEND = 'https://agrivalahbackend.vercel.app';      const verifyUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/otp/verify') : `${API_BACKEND}/api/otp/verify`;
       const res = await fetch(verifyUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -595,8 +593,7 @@ console.log('[Influencer Registration] Script loaded');
 
     try {
       // Use HTTPS API subdomain
-      const API_BACKEND = 'https://api.agrivalah.in';
-      const registerUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/influencers/register') : `${API_BACKEND}/api/influencers/register`;
+      const API_BACKEND = 'https://agrivalahbackend.vercel.app';      const registerUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/influencers/register') : `${API_BACKEND}/api/influencers/register`;
       const res = await fetch(registerUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

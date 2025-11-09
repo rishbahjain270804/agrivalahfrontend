@@ -54,8 +54,7 @@
   async function loadDashboard() {
     try {
       // Use HTTPS API subdomain as fallback
-      const API_BACKEND = 'https://api.agrivalah.in';
-      const getUrl = (endpoint) => typeof getApiUrl === 'function' ? getApiUrl(endpoint) : `${API_BACKEND}${endpoint}`;
+      const API_BACKEND = 'https://agrivalahbackend.vercel.app';      const getUrl = (endpoint) => typeof getApiUrl === 'function' ? getApiUrl(endpoint) : `${API_BACKEND}${endpoint}`;
 
       console.log('[Dashboard] Loading data...');
 
@@ -212,8 +211,7 @@
   // Mark Message as Read
   window.markAsRead = async function(messageId) {
     try {
-      const API_BACKEND = 'https://api.agrivalah.in';
-      const apiUrl = typeof getApiUrl === 'function' 
+      const API_BACKEND = 'https://agrivalahbackend.vercel.app';      const apiUrl = typeof getApiUrl === 'function' 
         ? getApiUrl(`/api/influencer/messages/${messageId}/read`) 
         : `${API_BACKEND}/api/influencer/messages/${messageId}/read`;
       

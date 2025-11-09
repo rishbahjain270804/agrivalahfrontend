@@ -26,8 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // Use HTTPS API subdomain as fallback
-      const API_BACKEND = 'https://api.agrivalah.in';
-      const loginUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/auth/login') : `${API_BACKEND}/api/auth/login`;
+      const API_BACKEND = 'https://agrivalahbackend.vercel.app';      const loginUrl = typeof getApiUrl === 'function' ? getApiUrl('/api/auth/login') : `${API_BACKEND}/api/auth/login`;
       console.log('[Admin Auth] Login URL:', loginUrl);
       const response = await fetch(loginUrl, {
         method: 'POST',

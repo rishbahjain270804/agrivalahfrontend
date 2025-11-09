@@ -49,8 +49,7 @@
   const apiRequest = async (endpoint, options = {}) => {
     try {
       // Use HTTPS API subdomain as fallback
-      const API_BACKEND = 'https://api.agrivalah.in';
-      const url = typeof getApiUrl === 'function' ? getApiUrl(endpoint) : `${API_BACKEND}${endpoint}`;
+      const API_BACKEND = 'https://agrivalahbackend.vercel.app';      const url = typeof getApiUrl === 'function' ? getApiUrl(endpoint) : `${API_BACKEND}${endpoint}`;
       console.log('[Admin Dashboard] API Request:', options.method || 'GET', url);
       const response = await fetch(url, {
         ...options,
