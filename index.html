@@ -36,6 +36,28 @@
             justify-content: center;
             max-width: 160px;
         }
+
+        /* Contact Buttons - Fix for WhatsApp and Email */
+        .contact-btn {
+            display: inline-flex !important;
+            align-items: center;
+            text-decoration: none !important;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .whatsapp-btn:hover {
+            background: #20BA5A !important;
+        }
+
+        .email-btn:hover {
+            background: #10b981 !important;
+            border-color: #10b981 !important;
+        }
     </style>
 
     <!-- Razorpay Payment Gateway -->
@@ -1494,16 +1516,16 @@
                             <p class="mb-3" style="line-height: 1.8;">
                                 <a href="https://wa.me/919959121199?text=Hello%20Agrivalah,%20I%20would%20like%20to%20know%20more%20about%20Natural%20Farming%20Certification"
                                     target="_blank" rel="noopener"
-                                    class="btn btn-success d-inline-flex align-items-center px-4 py-2"
-                                    style="background: #25D366; border: none; border-radius: 8px; font-weight: 600; transition: all 0.3s ease;">
+                                    class="contact-btn whatsapp-btn d-inline-flex align-items-center px-4 py-2"
+                                    style="background: #25D366; border: none; border-radius: 8px; font-weight: 600; transition: all 0.3s ease; color: white; text-decoration: none;">
                                     <i class="fa-brands fa-whatsapp me-2 fs-5"></i>
                                     Chat on WhatsApp
                                 </a>
                             </p>
                             <p class="mb-0" style="line-height: 1.8;">
                                 <a href="mailto:Agrivalah@gmail.com?subject=Inquiry%20about%20Natural%20Farming%20Certification&body=Hello%20Agrivalah%20Team,%0D%0A%0D%0AI%20would%20like%20to%20know%20more%20about%20Natural%20Farming%20Certification."
-                                    class="btn btn-outline-light d-inline-flex align-items-center px-4 py-2"
-                                    style="border: 2px solid #10b981; border-radius: 8px; font-weight: 600; transition: all 0.3s ease;">
+                                    class="contact-btn email-btn d-inline-flex align-items-center px-4 py-2"
+                                    style="border: 2px solid #10b981; border-radius: 8px; font-weight: 600; transition: all 0.3s ease; color: white; text-decoration: none;">
                                     <i class="fa fa-envelope me-2"></i>
                                     Send Email
                                 </a>
