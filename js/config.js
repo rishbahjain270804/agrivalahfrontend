@@ -1,10 +1,10 @@
 // API Configuration
 const API_CONFIG = {
-    // Backend API Base URL - Same domain on VPS
-    BASE_URL: window.location.origin,
+    // Backend API Base URL - Vercel deployment
+    BASE_URL: 'https://agrivalahbackend.vercel.app',
     
-    // Frontend domain on Hostinger VPS
-    FRONTEND_URL: window.location.origin,
+    // Frontend domain
+    FRONTEND_URL: 'https://agrivalah.in',
     
     // Set to false for production deployment
     // Set to true for local development (uses localhost:3002)
@@ -71,7 +71,14 @@ const API_CONFIG = {
         ADMIN_DELETE_COUPON: '/api/admin/coupons/:id',
         
         // Notifications
-        NOTIFY: '/api/notify'
+        NOTIFY: '/api/notify',
+        
+        // Advanced Features
+        ADMIN_UPDATE_PRICE: '/api/admin/settings/registration-price',
+        GET_REGISTRATION_PRICE: '/api/settings/registration-price',
+        PARTNER_PASSWORD_RESET_REQUEST: '/api/partner/password-reset/request',
+        PARTNER_PASSWORD_RESET_VERIFY: '/api/partner/password-reset/verify',
+        PARTNER_WHATSAPP_SHARE: '/api/partner/whatsapp-share/:referralCode'
     }
 };
 

@@ -299,8 +299,6 @@
     const mainCoupon = coupons[0] || { code: profile.couponCode };
     
     const referralSection = document.getElementById('referralSection');
-    const shareText = `Join Agrivalah Natural Farming! Use my referral code: ${mainCoupon.code}`;
-    const whatsappLink = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
 
     referralSection.innerHTML = `
       <h3 class="section-title">
@@ -317,7 +315,7 @@
       </div>
       
       <div class="share-buttons">
-        <button class="share-btn whatsapp" onclick="window.open('${whatsappLink}', '_blank')">
+        <button class="share-btn whatsapp" id="openWhatsappModalBtn">
           <i class="fab fa-whatsapp"></i> Share on WhatsApp
         </button>
         <button class="share-btn" onclick="copyCode('${mainCoupon.code}')">
@@ -325,6 +323,53 @@
         </button>
       </div>
     `;
+
+    // Add WhatsApp modal handler
+    setTimeout(() => {
+      document.getElementById('openWhatsappModalBtn')?.addEventListener('click', async () => {
+        const whatsappModal = new bootstrap.Modal(document.getElementById('whatsappShareModal'));
+        
+        try {
+          const API_BACKEND = 'https://agrivalahbackend.vercel.app';
+          const getUrl = (endpoint) => typeof getApiUrl === 'function' ? getApiUrl(endpoint) : `${API_BACKEND}${endpoint}`;
+
+          const response = await fetch(getUrl(`/api/partner/whatsapp-share/${mainCoupon.code}`), {
+            credentials: 'include'
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            document.getElementById('whatsappShareLink').value = data.registrationUrl;
+            document.getElementById('whatsappMessage').value = decodeURIComponent(
+              data.whatsappUrl.split('text=')[1]
+            );
+
+            // Copy link button
+            document.getElementById('copyLinkBtn').onclick = () => {
+              navigator.clipboard.writeText(data.registrationUrl);
+              const btn = document.getElementById('copyLinkBtn');
+              btn.innerHTML = '<i class="fas fa-check"></i>';
+              setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-copy"></i>';
+              }, 2000);
+            };
+
+            // Open WhatsApp button
+            document.getElementById('shareOnWhatsappBtn').onclick = () => {
+              window.open(data.whatsappUrl, '_blank');
+            };
+
+            whatsappModal.show();
+          } else {
+            alert(data.message || 'Failed to generate share link');
+          }
+        } catch (error) {
+          console.error('Error generating WhatsApp link:', error);
+          alert('Failed to generate share link. Please try again.');
+        }
+      });
+    }, 100);
   }
 
   // Render statistics
@@ -460,6 +505,121 @@
     });
 
     document.getElementById('logoutBtn').addEventListener('click', logout);
+
+    // Password Reset Modal
+    const passwordResetModal = new bootstrap.Modal(document.getElementById('passwordResetModal'));
+    document.getElementById('changePasswordBtn')?.addEventListener('click', () => {
+      // Pre-fill phone number
+      if (dashboardData?.profile?.phone_number) {
+        document.getElementById('passwordResetPhone').value = dashboardData.profile.phone_number;
+      }
+      // Reset modal state
+      document.getElementById('passwordResetStep1').style.display = 'block';
+      document.getElementById('passwordResetStep2').style.display = 'none';
+      document.getElementById('passwordResetSuccess').style.display = 'none';
+      document.getElementById('passwordResetOtp').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confirmNewPassword').value = '';
+      passwordResetModal.show();
+    });
+
+    // Request Password Reset OTP
+    document.getElementById('requestPasswordOtpBtn')?.addEventListener('click', async () => {
+      const phone = document.getElementById('passwordResetPhone').value;
+      const btn = document.getElementById('requestPasswordOtpBtn');
+      const originalText = btn.innerHTML;
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending OTP...';
+
+      try {
+        const API_BACKEND = 'https://agrivalahbackend.vercel.app';
+        const getUrl = (endpoint) => typeof getApiUrl === 'function' ? getApiUrl(endpoint) : `${API_BACKEND}${endpoint}`;
+
+        const response = await fetch(getUrl('/api/partner/password-reset/request'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ phone })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          document.getElementById('passwordResetStep1').style.display = 'none';
+          document.getElementById('passwordResetStep2').style.display = 'block';
+        } else {
+          alert(data.message || 'Failed to send OTP');
+        }
+      } catch (error) {
+        console.error('Error requesting OTP:', error);
+        alert('Failed to send OTP. Please try again.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    });
+
+    // Reset Password with OTP
+    document.getElementById('resetPasswordBtn')?.addEventListener('click', async () => {
+      const phone = document.getElementById('passwordResetPhone').value;
+      const otp = document.getElementById('passwordResetOtp').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmNewPassword').value;
+
+      if (!otp || otp.length !== 4) {
+        alert('Please enter a valid 4-digit OTP');
+        return;
+      }
+
+      if (newPassword.length < 8) {
+        alert('Password must be at least 8 characters long');
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
+
+      const btn = document.getElementById('resetPasswordBtn');
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Resetting...';
+
+      try {
+        const API_BACKEND = 'https://agrivalahbackend.vercel.app';
+        const getUrl = (endpoint) => typeof getApiUrl === 'function' ? getApiUrl(endpoint) : `${API_BACKEND}${endpoint}`;
+
+        const response = await fetch(getUrl('/api/partner/password-reset/verify'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ phone, otp, newPassword })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          document.getElementById('passwordResetStep2').style.display = 'none';
+          document.getElementById('passwordResetSuccess').style.display = 'block';
+        } else {
+          alert(data.message || 'Failed to reset password');
+        }
+      } catch (error) {
+        console.error('Error resetting password:', error);
+        alert('Failed to reset password. Please try again.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    });
+
+    // Resend OTP
+    document.getElementById('resendPasswordOtpBtn')?.addEventListener('click', () => {
+      document.getElementById('passwordResetStep2').style.display = 'none';
+      document.getElementById('passwordResetStep1').style.display = 'block';
+    });
 
     // Auto-refresh every 30 seconds
     setInterval(loadDashboard, 30000);

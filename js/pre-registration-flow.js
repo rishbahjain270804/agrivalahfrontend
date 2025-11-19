@@ -18,8 +18,8 @@
     OTP_LENGTH: 4,
     RESEND_COOLDOWN_SECONDS: 60,
     PHONE_REGEX: /^[6-9]\d{9}$/,
-    DEFAULT_AMOUNT: 324,
-    DISCOUNTED_AMOUNT: 270,
+    DEFAULT_AMOUNT: 500,
+    DISCOUNTED_AMOUNT: 450,
     COUPON_DEBOUNCE_MS: 500
   };
 
@@ -780,6 +780,15 @@
   // Form submission
   if (formElements.form) {
     formElements.form.addEventListener('submit', handleFullFormSubmit);
+  }
+
+  // Auto-apply referral code from URL parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  const refCode = urlParams.get('ref');
+  if (refCode && preElements.couponInput) {
+    preElements.couponInput.value = refCode.toUpperCase();
+    validateCoupon(refCode);
+    console.log('[Registration] Auto-applied referral code from URL:', refCode);
   }
 
   // Coupon input with debounce

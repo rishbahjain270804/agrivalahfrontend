@@ -1047,7 +1047,7 @@
           </div>
           <div class="col-md-6">
             <label class="form-label">Payment Amount *</label>
-            <input type="number" class="form-control" name="payment_amount" value="324" required>
+            <input type="number" class="form-control" name="payment_amount" value="500" required>
           </div>
           <div class="col-md-6">
             <label class="form-label">Payment Status *</label>
@@ -1170,7 +1170,7 @@
       area_natural_farming: '3',
       crop_types: 'Rice, Wheat',
       farming_practice: 'Natural',
-      payment_amount: '324',
+      payment_amount: '500',
       payment_status: 'completed',
       coupon_code: ''
     }];
@@ -1458,10 +1458,72 @@
       window.openBulkUpload();
     });
 
-    // Settings
-    document.getElementById('saveSettingsBtn')?.addEventListener('click', () => {
-      showAlert('Settings saved successfully!', 'success');
+    // Settings - Price Update
+    document.getElementById('updatePriceBtn')?.addEventListener('click', async () => {
+      const newPrice = parseInt(document.getElementById('registrationFee').value);
+      
+      if (!newPrice || newPrice < 0) {
+        showAlert('Please enter a valid price', 'danger');
+        return;
+      }
+
+      if (!confirm(`Are you sure you want to update registration price to ₹${newPrice}?`)) {
+        return;
+      }
+
+      const btn = document.getElementById('updatePriceBtn');
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Updating...';
+
+      try {
+        const response = await apiRequest(API_CONFIG.ENDPOINTS.ADMIN_UPDATE_PRICE, {
+          method: 'PUT',
+          body: JSON.stringify({ newPrice })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          document.getElementById('currentPrice').textContent = newPrice;
+          showAlert(`Registration price updated to ₹${newPrice} successfully!`, 'success');
+          
+          const statusDiv = document.getElementById('priceUpdateStatus');
+          statusDiv.innerHTML = `
+            <div class="alert alert-success">
+              <i class="fas fa-check-circle me-2"></i>
+              Price updated successfully! New registrations will use ₹${newPrice}.
+            </div>
+          `;
+        } else {
+          showAlert(data.message || 'Failed to update price', 'danger');
+        }
+      } catch (error) {
+        console.error('Error updating price:', error);
+        showAlert('Failed to update price. Please try again.', 'danger');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
     });
+
+    // Load current price on settings page load
+    const loadCurrentPrice = async () => {
+      try {
+        const response = await apiRequest(API_CONFIG.ENDPOINTS.GET_REGISTRATION_PRICE);
+        const data = await response.json();
+        
+        if (data.success) {
+          document.getElementById('registrationFee').value = data.price;
+          document.getElementById('currentPrice').textContent = data.price;
+        }
+      } catch (error) {
+        console.error('Error loading current price:', error);
+      }
+    };
+
+    // Load price when settings section is opened
+    document.querySelector('[data-section="settings"]')?.addEventListener('click', loadCurrentPrice);
 
     document.getElementById('exportDatabaseBtn')?.addEventListener('click', () => {
       showAlert('Database export feature coming soon', 'info');

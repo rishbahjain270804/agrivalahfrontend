@@ -28,7 +28,7 @@
 
   const state = {
     otpLength: OTP_LENGTH,
-    amount: 324,
+    amount: 500,
     couponCode: '',
     otpToken: null,
     referenceId: null,
@@ -373,7 +373,7 @@
     const trimmed = value.trim();
     if (!trimmed) {
       state.couponCode = '';
-      updateAmountDisplay(324);
+      updateAmountDisplay(500);
       setStatusMessage(elements.couponStatus, '');
       return;
     }
@@ -393,12 +393,12 @@
         setStatusMessage(elements.couponStatus, label, 'success');
       } else {
         state.couponCode = '';
-        updateAmountDisplay(324);
+        updateAmountDisplay(500);
         setStatusMessage(elements.couponStatus, 'Invalid referral code.', 'error');
       }
     } catch (error) {
       state.couponCode = '';
-      updateAmountDisplay(324);
+      updateAmountDisplay(500);
       setStatusMessage(elements.couponStatus, error.message || 'Unable to validate coupon.', 'error');
     }
   }
@@ -528,7 +528,7 @@
     state.couponCode = '';
     state.sessionExpiresAt = null;
     state.lastOtpHint = null;
-    updateAmountDisplay(324);
+    updateAmountDisplay(500);
     showMessage('success', 'Registration completed successfully! Our team will contact you shortly.');
     setStatusMessage(elements.couponStatus, '');
     setStatusMessage(elements.otpStatus, '');

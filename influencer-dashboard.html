@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Influencer Dashboard - Agrivalah</title>
+  <title>Partner Dashboard - Agrivalah</title>
   <link rel="stylesheet" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -509,10 +509,13 @@
     <!-- Header -->
     <div class="dashboard-header">
       <div class="header-left">
-        <h1><i class="fas fa-leaf"></i> Agrivalah Influencer</h1>
+        <h1><i class="fas fa-leaf"></i> Agrivalah Partner</h1>
         <p id="lastUpdated">Loading...</p>
       </div>
       <div class="header-right">
+        <button class="btn btn-outline" id="changePasswordBtn" title="Change Password">
+          <i class="fas fa-key"></i> Password
+        </button>
         <button class="btn btn-outline" id="refreshBtn">
           <i class="fas fa-sync-alt"></i> Refresh
         </button>
@@ -606,6 +609,98 @@
           <p>Loading activity...</p>
         </li>
       </ul>
+    </div>
+  </div>
+
+  <!-- Password Reset Modal -->
+  <div class="modal fade" id="passwordResetModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-key me-2"></i>Change Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div id="passwordResetStep1">
+            <div class="alert alert-info">
+              <i class="fas fa-info-circle me-2"></i>
+              We'll send an OTP to your registered phone number to verify it's you.
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" id="passwordResetPhone" readonly>
+            </div>
+            <button class="btn btn-primary w-100" id="requestPasswordOtpBtn">
+              <i class="fas fa-paper-plane me-2"></i>Send OTP
+            </button>
+          </div>
+          <div id="passwordResetStep2" style="display: none;">
+            <div class="alert alert-success">
+              <i class="fas fa-check-circle me-2"></i>
+              OTP sent! Check your phone.
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Enter OTP</label>
+              <input type="text" class="form-control text-center" id="passwordResetOtp" maxlength="4" placeholder="****">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">New Password</label>
+              <input type="password" class="form-control" id="newPassword" minlength="8" placeholder="Minimum 8 characters">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Confirm New Password</label>
+              <input type="password" class="form-control" id="confirmNewPassword" minlength="8">
+            </div>
+            <button class="btn btn-success w-100" id="resetPasswordBtn">
+              <i class="fas fa-check me-2"></i>Reset Password
+            </button>
+            <button class="btn btn-link w-100 mt-2" id="resendPasswordOtpBtn">
+              Didn't receive OTP? Resend
+            </button>
+          </div>
+          <div id="passwordResetSuccess" style="display: none;">
+            <div class="alert alert-success">
+              <i class="fas fa-check-circle me-2"></i>
+              Password changed successfully! You can now login with your new password.
+            </div>
+            <button class="btn btn-primary w-100" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WhatsApp Share Modal -->
+  <div class="modal fade" id="whatsappShareModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fab fa-whatsapp me-2"></i>Share on WhatsApp</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-success">
+            <i class="fas fa-info-circle me-2"></i>
+            Share your referral link on WhatsApp to earn ₹50 per registration!
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Your Referral Link</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="whatsappShareLink" readonly>
+              <button class="btn btn-outline-secondary" id="copyLinkBtn">
+                <i class="fas fa-copy"></i>
+              </button>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Preview Message</label>
+            <textarea class="form-control" id="whatsappMessage" rows="8" readonly></textarea>
+          </div>
+          <button class="btn btn-success w-100 btn-lg" id="shareOnWhatsappBtn">
+            <i class="fab fa-whatsapp me-2"></i>Open WhatsApp
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 

@@ -499,7 +499,7 @@
         <div class="stat-card">
           <div class="stat-card-header">
             <div>
-              <p class="stat-label">Active Influencers</p>
+              <p class="stat-label">Active Partners</p>
               <h2 class="stat-value" id="statInfluencers">0</h2>
             </div>
             <div class="stat-icon" style="background: #fef3c7; color: #92400e;">
@@ -750,7 +750,7 @@
     <!-- Influencers Section -->
     <div id="influencersSection" class="content-section">
       <div class="top-bar">
-        <h1 class="page-title">Active Influencers</h1>
+        <h1 class="page-title">Active Partners</h1>
         <div class="top-bar-actions">
           <button class="btn btn-success btn-sm" onclick="window.showBroadcastModal()">
             <i class="fas fa-bullhorn"></i> Broadcast Message
@@ -819,7 +819,7 @@
     <!-- Approvals Section -->
     <div id="approvalsSection" class="content-section">
       <div class="top-bar">
-        <h1 class="page-title">Influencer Approvals</h1>
+        <h1 class="page-title">Partner Approvals</h1>
         <div class="top-bar-actions">
           <span class="badge badge-warning" id="pendingCount">0 Pending</span>
         </div>
@@ -883,20 +883,40 @@
         <div class="col-md-6">
           <div class="content-card">
             <div class="content-card-header">
-              <h3 class="content-card-title">Website Configuration</h3>
+              <h3 class="content-card-title">
+                <i class="fas fa-rupee-sign me-2"></i>Registration Price Management
+              </h3>
             </div>
             <div class="content-card-body">
-              <div class="mb-3">
-                <label class="form-label">Registration Fee (₹)</label>
-                <input type="number" class="form-control" id="registrationFee" value="300">
+              <div class="alert alert-info" role="alert">
+                <i class="fas fa-info-circle me-2"></i>
+                Changes take effect immediately for new registrations.
               </div>
               <div class="mb-3">
-                <label class="form-label">Default Discount (₹)</label>
-                <input type="number" class="form-control" id="defaultDiscount" value="50">
+                <label class="form-label fw-bold">Current Registration Fee</label>
+                <div class="input-group">
+                  <span class="input-group-text">₹</span>
+                  <input type="number" class="form-control form-control-lg" id="registrationFee" value="500" min="0" step="1">
+                  <span class="input-group-text">.00</span>
+                </div>
+                <div class="form-text">
+                  Current price: ₹<span id="currentPrice">500</span> (All-inclusive)
+                </div>
               </div>
-              <button class="btn btn-primary" id="saveSettingsBtn">
-                <i class="fas fa-save"></i> Save Settings
+              <div class="mb-3">
+                <label class="form-label">Coupon Discount Amount</label>
+                <div class="input-group">
+                  <span class="input-group-text">₹</span>
+                  <input type="number" class="form-control" id="defaultDiscount" value="50" min="0" readonly>
+                </div>
+                <div class="form-text text-muted">
+                  Fixed at ₹50 per coupon. Manage in Coupons section.
+                </div>
+              </div>
+              <button class="btn btn-primary btn-lg w-100" id="updatePriceBtn">
+                <i class="fas fa-save me-2"></i> Update Registration Price
               </button>
+              <div id="priceUpdateStatus" class="mt-3"></div>
             </div>
           </div>
         </div>
@@ -961,7 +981,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Send Message to Influencer</h5>
+          <h5 class="modal-title">Send Message to Partner</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
