@@ -4,7 +4,7 @@ const API_CONFIG = {
     BASE_URL: 'https://agrivalahbackend.vercel.app',
     
     // Frontend domain
-    FRONTEND_URL: 'https://agrivalah.in',
+    FRONTEND_URL: 'https://www.agrivalah.in',
     
     // Set to false for production deployment
     // Set to true for local development (uses localhost:3002)
