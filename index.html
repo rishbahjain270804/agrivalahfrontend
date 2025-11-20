@@ -166,23 +166,26 @@
             <!-- Statistics Banner -->
             <div class="container mt-5">
                 <div
-                    class="sm-hide border-white-op-3 p-40 py-5 rounded-1 bg-blur relative overflow-hidden wow fadeInUp"
-                    style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.15) 100%); 
-                           border: 3px solid rgba(16, 185, 129, 0.4) !important; 
-                           box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);">
+                    class="border-white-op-3 p-40 py-5 rounded-1 relative overflow-hidden wow fadeInUp"
+                    style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%); 
+                           border: 3px solid rgba(255, 255, 255, 0.3) !important; 
+                           box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+                           backdrop-filter: none;">
                     <div class="gradient-edge-bottom color start-0 h-50 op-5"></div>
-                    <div class="row g-4 justify-content-between align-items-center relative z-2">
+                    <!-- Desktop View -->
+                    <div class="row g-4 justify-content-between align-items-center relative z-2 d-none d-lg-flex">
                         <div class="col-lg-3">
                             <div class="text-center" style="animation: pulse 2s infinite;">
-                                <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
-                                            padding: 20px; border-radius: 15px; 
-                                            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);">
-                                    <i class="icofont-check-circled" style="font-size: 48px; color: white; margin-bottom: 10px;"></i>
-                                    <h1 class="mb-0" style="color: white; font-size: 42px; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">50,000+</h1>
-                                    <h3 class="mb-0" style="color: white; font-weight: 600;">Farmers</h3>
-                                    <h4 class="mb-0" style="color: rgba(255,255,255,0.95); font-weight: 500;">Already Certified</h4>
-                                    <a href="/about-natural-farming.html" class="btn btn-light btn-sm mt-3" 
-                                       style="font-weight: 600; border-radius: 25px; padding: 8px 24px;">
+                                <div style="background: rgba(255, 255, 255, 0.2); 
+                                            padding: 25px; border-radius: 15px; 
+                                            border: 2px solid rgba(255, 255, 255, 0.3);
+                                            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);">
+                                    <i class="icofont-check-circled" style="font-size: 52px; color: white; margin-bottom: 15px; text-shadow: 2px 2px 8px rgba(0,0,0,0.3);"></i>
+                                    <h1 class="mb-1" style="color: white; font-size: 48px; font-weight: 900; text-shadow: 3px 3px 6px rgba(0,0,0,0.3);">50,000+</h1>
+                                    <h3 class="mb-1" style="color: white; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">Farmers</h3>
+                                    <h4 class="mb-3" style="color: rgba(255,255,255,0.95); font-weight: 500; text-shadow: 1px 1px 3px rgba(0,0,0,0.2);">Already Certified</h4>
+                                    <a href="/about-natural-farming.html" class="btn btn-light btn-sm mt-2" 
+                                       style="font-weight: 700; border-radius: 25px; padding: 10px 28px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
                                         Know More <i class="fa fa-arrow-right ms-2"></i>
                                     </a>
                                 </div>
@@ -190,19 +193,52 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="d-flex align-items-center">
-                                <i class="fs-60 icofont-rupee id-color me-3"></i>
+                                <i class="fs-60 me-3" style="color: white; font-size: 70px;">₹</i>
                                 <div>
-                                    <h4 class="mb-0">₹500 Only (All taxes included)</h4>
-                                    <p class="mb-0">Registration Fee (incl. 8% GST)</p>
+                                    <h4 class="mb-0" style="color: white; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">₹500 Only (All taxes included)</h4>
+                                    <p class="mb-0" style="color: rgba(255,255,255,0.9); font-weight: 500;">Registration Fee (incl. 8% GST)</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <div class="d-flex">
-                                <i class="fs-60 icofont-phone id-color"></i>
-                                <div class="ms-3">
-                                    <h4 class="mb-0">+91 99591 21199<br>Phone Support</h4>
+                            <div class="d-flex align-items-center">
+                                <i class="fs-60 icofont-phone me-3" style="color: white; font-size: 70px;"></i>
+                                <div>
+                                    <h4 class="mb-0" style="color: white; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">+91 99591 21199</h4>
+                                    <p class="mb-0" style="color: rgba(255,255,255,0.9); font-weight: 500;">Phone Support</p>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile View - 2x2 Grid -->
+                    <div class="row g-3 relative z-2 d-flex d-lg-none">
+                        <div class="col-6">
+                            <div class="text-center p-3" style="background: rgba(255, 255, 255, 0.15); border-radius: 12px; border: 2px solid rgba(255, 255, 255, 0.25);">
+                                <i class="icofont-check-circled" style="font-size: 36px; color: white; margin-bottom: 10px;"></i>
+                                <h2 class="mb-0" style="color: white; font-size: 28px; font-weight: 800;">50,000+</h2>
+                                <p class="mb-0 small" style="color: rgba(255,255,255,0.9); font-weight: 600;">Farmers Certified</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-center p-3" style="background: rgba(255, 255, 255, 0.15); border-radius: 12px; border: 2px solid rgba(255, 255, 255, 0.25);">
+                                <i class="icofont-phone" style="font-size: 36px; color: white; margin-bottom: 10px;"></i>
+                                <h4 class="mb-0" style="color: white; font-weight: 700; font-size: 16px;">+91 99591 21199</h4>
+                                <p class="mb-0 small" style="color: rgba(255,255,255,0.9); font-weight: 600;">Phone Support</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-center p-3" style="background: rgba(255, 255, 255, 0.15); border-radius: 12px; border: 2px solid rgba(255, 255, 255, 0.25);">
+                                <i class="fa fa-rupee-sign" style="font-size: 36px; color: white; margin-bottom: 10px;"></i>
+                                <h4 class="mb-0" style="color: white; font-weight: 700; font-size: 18px;">₹500 Only</h4>
+                                <p class="mb-0 small" style="color: rgba(255,255,255,0.9); font-weight: 600;">All taxes included</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-center p-3" style="background: rgba(255, 255, 255, 0.15); border-radius: 12px; border: 2px solid rgba(255, 255, 255, 0.25);">
+                                <a href="/about-natural-farming.html" class="btn btn-light btn-sm w-100" style="font-weight: 700; border-radius: 8px; padding: 12px;">
+                                    Know More <i class="fa fa-arrow-right ms-1"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -227,7 +263,7 @@
                         <h2 class="wow fadeInUp" data-wow-delay=".4s">The Government of India Initiative</h2>
                         <p class="wow fadeInUp" data-wow-delay=".6s">The Government of India has launched the National
                             Natural Farming Mission to help farmers return to nature-based cultivation and restore soil
-                            and human health. We help farmers get PGS-India certification for chemical-free farming.</p>
+                            and human health. We help farmers get <strong style="color: #ff8c00; font-weight: 800;">PGS-India</strong> certification for chemical-free farming.</p>
 
                         <ul class="ul-check">
                             <li class="wow fadeInUp" data-wow-delay=".8s">Official PGS-India certification recognized
@@ -728,8 +764,7 @@
                                 </div>
                                 <button type="button" class="btn btn-success btn-lg px-5" id="proceed-to-payment-btn"
                                     disabled>
-                                    <i class="fa fa-credit-card me-2"></i>Proceed to Payment (<span
-                                        id="pre-button-amount">₹500</span>)
+                                    <i class="fa fa-credit-card me-2"></i>Proceed to Payment
                                 </button>
                             </div>
                         </form>
@@ -817,6 +852,50 @@
                                             (Optional)</label>
                                         <input type="text" class="form-control" id="aadhaar-farmer-id">
                                     </div>
+                                    <div class="col-md-4">
+                                        <label for="gender" class="form-label text-white">Gender *</label>
+                                        <select class="form-control" id="gender" required>
+                                            <option value="">Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="category" class="form-label text-white">Category *</label>
+                                        <select class="form-control" id="category" required>
+                                            <option value="">Select Category</option>
+                                            <option value="General">General</option>
+                                            <option value="OBC">OBC</option>
+                                            <option value="SC">SC</option>
+                                            <option value="ST">ST</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="farmer-age" class="form-label text-white">Age *</label>
+                                        <input type="number" class="form-control" id="farmer-age" min="18" max="100" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bank Details Section -->
+                            <div class="mb-5">
+                                <h4 class="text-white mb-4"><i class="fa fa-university me-2"></i>Bank Details</h4>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="bank-name" class="form-label text-white">Bank Name *</label>
+                                        <input type="text" class="form-control" id="bank-name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="bank-account-number" class="form-label text-white">Bank Account Number *</label>
+                                        <input type="text" class="form-control" id="bank-account-number" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="bank-ifsc" class="form-label text-white">Bank IFSC Code *</label>
+                                        <input type="text" class="form-control" id="bank-ifsc" pattern="[A-Z]{4}0[A-Z0-9]{6}" 
+                                               maxlength="11" placeholder="e.g., SBIN0001234" required>
+                                        <small class="text-muted">11 characters: 4 letters, 0, then 6 digits/letters</small>
+                                    </div>
                                 </div>
                             </div>
 
@@ -864,6 +943,10 @@
                                         <input type="text" class="form-control" id="district" required>
                                     </div>
                                     <div class="col-md-6">
+                                        <label for="sub-district" class="form-label text-white">Sub District / Tehsil</label>
+                                        <input type="text" class="form-control" id="sub-district">
+                                    </div>
+                                    <div class="col-md-6">
                                         <label for="mandal-block" class="form-label text-white">Mandal / Block *</label>
                                         <input type="text" class="form-control" id="mandal-block" required>
                                     </div>
@@ -872,16 +955,22 @@
                                             *</label>
                                         <input type="text" class="form-control" id="village-panchayat" required>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="pincode" class="form-label text-white">Pincode</label>
-                                        <input type="text" class="form-control" id="pincode" pattern="[0-9]{6}" 
-                                               maxlength="6" placeholder="Enter 6-digit pincode">
-                                        <small class="form-text text-muted">Optional: 6-digit pincode</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Land Information Section -->
+                    <div class="col-md-6">
+                        <label for="pincode" class="form-label text-white">Pincode</label>
+                        <input type="text" class="form-control" id="pincode" pattern="[0-9]{6}" 
+                               maxlength="6" placeholder="Enter 6-digit pincode">
+                        <small class="form-text text-muted">Optional: 6-digit pincode</small>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="house-number" class="form-label text-white">House Number</label>
+                        <input type="text" class="form-control" id="house-number">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="landmark" class="form-label text-white">Landmark</label>
+                        <input type="text" class="form-control" id="landmark" placeholder="Near...">
+                    </div>
+                </div>
+            </div>                            <!-- Land Information Section -->
                             <div class="mb-5">
                                 <h4 class="text-white mb-4"><i class="fa fa-leaf me-2"></i>Land & Farming Information
                                 </h4>
@@ -920,6 +1009,16 @@
                                                 <option value="Hectare">Hectares</option>
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="land-ownership" class="form-label text-white">Land Ownership *</label>
+                                        <select class="form-control" id="land-ownership" required>
+                                            <option value="">Select Ownership Type</option>
+                                            <option value="Own">Own</option>
+                                            <option value="Rented">Rented</option>
+                                            <option value="Lease">Lease</option>
+                                            <option value="Family">Family Owned</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -996,6 +1095,18 @@
                                             </div>
                                         </div>
                                     </template>
+
+                                    <!-- Overall Yield Information -->
+                                    <div class="col-md-6 mt-4">
+                                        <label for="expected-yield" class="form-label text-white">Expected Total Yield (in Quintals)</label>
+                                        <input type="number" class="form-control" id="expected-yield" min="0" step="0.1" placeholder="Expected production">
+                                        <small class="text-muted">Total expected production across all crops</small>
+                                    </div>
+                                    <div class="col-md-6 mt-4">
+                                        <label for="self-consumption" class="form-label text-white">Self Consumption (in Quintals)</label>
+                                        <input type="number" class="form-control" id="self-consumption" min="0" step="0.1" placeholder="For own use">
+                                        <small class="text-muted">Amount kept for personal/family consumption</small>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1088,6 +1199,23 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
+                                        <label class="form-label text-white">Irrigation Methods *</label>
+                                        <div class="mt-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="irrigation-method"
+                                                    id="irrigation-method-irrigation" value="Irrigation" checked>
+                                                <label class="form-check-label text-white"
+                                                    for="irrigation-method-irrigation">Irrigation</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="irrigation-method"
+                                                    id="irrigation-method-rainfed" value="Rainfed">
+                                                <label class="form-check-label text-white"
+                                                    for="irrigation-method-rainfed">Rainfed</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
                                         <label class="form-label text-white">Livestock (if any) *</label>
                                         <div class="mt-2">
                                             <div class="form-check">
@@ -1145,6 +1273,123 @@
                                                     for="livestock-none">None</label>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="livestock-quantity" class="form-label text-white">Total Livestock Quantity</label>
+                                        <input type="number" class="form-control" id="livestock-quantity" min="0" placeholder="Total number of animals">
+                                        <small class="text-muted">Total count of all livestock</small>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label text-white">Machineries & Equipments/Tools <small>(Select all that apply)</small></label>
+                                        <div class="row mt-2">
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="machinery" id="machinery-grinder" value="Grinder">
+                                                    <label class="form-check-label text-white" for="machinery-grinder">Grinder</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="machinery" id="machinery-mixer" value="Mixer">
+                                                    <label class="form-check-label text-white" for="machinery-mixer">Mixer</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="machinery" id="machinery-dal" value="Dal maker">
+                                                    <label class="form-check-label text-white" for="machinery-dal">Dal Maker</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="machinery" id="machinery-rice" value="Rice milling">
+                                                    <label class="form-check-label text-white" for="machinery-rice">Rice Milling</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="machinery" id="machinery-tractor" value="Tractor">
+                                                    <label class="form-check-label text-white" for="machinery-tractor">Tractor</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="machinery" id="machinery-thresher" value="Thresher">
+                                                    <label class="form-check-label text-white" for="machinery-thresher">Thresher</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="machinery" id="machinery-other" value="Other">
+                                                    <label class="form-check-label text-white" for="machinery-other">Other</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="machinery" id="machinery-none" value="None">
+                                                    <label class="form-check-label text-white" for="machinery-none">None</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Storage & Facilities Section -->
+                            <div class="mb-5">
+                                <h4 class="text-white mb-4"><i class="fa fa-warehouse me-2"></i>Storage & Facilities</h4>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="godam-count" class="form-label text-white">Number of Godam / Storage Units</label>
+                                        <input type="number" class="form-control" id="godam-count" min="0" value="0">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="godam-capacity" class="form-label text-white">Capacity of Godam / Storage (in Quintals)</label>
+                                        <input type="number" class="form-control" id="godam-capacity" min="0" step="0.1" placeholder="Total storage capacity">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label text-white">Compost / Manure Facility</label>
+                                        <div class="mt-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="compost-facility" id="compost-yes" value="Yes">
+                                                <label class="form-check-label text-white" for="compost-yes">Yes</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="compost-facility" id="compost-no" value="No" checked>
+                                                <label class="form-check-label text-white" for="compost-no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label text-white">Process Facility</label>
+                                        <div class="mt-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="process-facility" id="process-yes" value="Yes">
+                                                <label class="form-check-label text-white" for="process-yes">Yes</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="process-facility" id="process-no" value="No" checked>
+                                                <label class="form-check-label text-white" for="process-no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label text-white">Any Other Facility</label>
+                                        <div class="mt-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="other-facility" id="other-facility-yes" value="Yes">
+                                                <label class="form-check-label text-white" for="other-facility-yes">Yes</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="other-facility" id="other-facility-no" value="No" checked>
+                                                <label class="form-check-label text-white" for="other-facility-no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="last-chemical-date" class="form-label text-white">Last Date of Use of Prohibited Substances (Chemicals/Pesticides)</label>
+                                        <input type="date" class="form-control" id="last-chemical-date">
+                                        <small class="text-muted">Leave blank if never used or more than 3 years ago</small>
                                     </div>
                                 </div>
                             </div>
@@ -1210,9 +1455,8 @@
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="cropping-season"
-                                                    id="season-zaid" value="Zaid">
-                                                <label class="form-check-label text-white" for="season-zaid">Zaid
-                                                    (Summer)</label>
+                                                    id="season-summer" value="Summer">
+                                                <label class="form-check-label text-white" for="season-summer">Summer</label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="cropping-season"
@@ -1497,7 +1741,10 @@
 
                         <!-- Logo & Social Media Section -->
                         <div class="mb-4 mb-lg-0">
-                            <img src="images/cyano-new-logo.jpg" class="w-150px mb-3" alt="Cyano Foods India">
+                            <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap mb-3">
+                                <img src="images/cyano-new-logo.jpg" class="w-150px" alt="Cyano Foods India">
+                                <img src="images/pgs-india-logo.png" style="height: 80px; width: auto;" alt="PGS-India Organic" onerror="this.style.display='none'">
+                            </div>
                             <div class="social-icons mt-3">
                                 <a href="https://www.facebook.com/share/1H4YLzs8H8/" target="_blank" rel="noopener"
                                     title="Facebook">
@@ -1569,13 +1816,13 @@
 
     <!-- Javascript Files
     ================================================== -->
-    <script src="js/config.js"></script>
+    <script src="js/config.js?v=2.0"></script>
     <script src="js/vendors.js"></script>
     <script src="js/designesia.js"></script>
     <script src="js/countdown-custom.js"></script>
     <script src="js/custom-marquee.js"></script>
 
-    <script src="js/pre-registration-flow.js"></script>
+    <script src="js/pre-registration-flow.js?v=2.0"></script>
 
     <!-- Crop Template (hidden) -->
     <template id="crop-template">

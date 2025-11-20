@@ -307,31 +307,62 @@
       contactNumber: getValue('contact-number'),
       emailId: getValue('email-id'),
       aadhaarFarmerId: getValue('aadhaar-farmer-id'),
+      // NEW: Demographics
+      gender: getValue('gender'),
+      category: getValue('category'),
+      farmerAge: getValue('farmer-age'),
+      // NEW: Bank Details
+      bankName: getValue('bank-name'),
+      bankAccountNumber: getValue('bank-account-number'),
+      bankIfsc: getValue('bank-ifsc'),
+      // Location
       villagePanchayat: getValue('village-panchayat'),
       mandalBlock: getValue('mandal-block'),
+      subDistrict: getValue('sub-district'),
       district: getValue('district'),
       state: getValue('state'),
+      pincode: getValue('pincode'),
+      houseNumber: getValue('house-number'),
+      landmark: getValue('landmark'),
+      // Land Information
       khasraPassbook: getValue('khasra-passbook'),
       plotNo: getValue('plot-no'),
       totalLand: getValue('total-land'),
       landUnit: getValue('land-unit'),
       areaNaturalFarming: getValue('area-natural-farming'),
+      landOwnership: getValue('land-ownership'),
+      // Crop Information
       presentCrop: getValue('present-crop'),
       sowingDate: getValue('sowing-date'),
       harvestingDate: getValue('harvesting-date'),
       cropTypes: getValue('crop-types'),
       crops: collectCrops(),
-      farmingPractice: getRadioValue('farming-practice'),
+      expectedYield: getValue('expected-yield'),
+      selfConsumption: getValue('self-consumption'),
+      // Farming Practice
+      farmingPractice: getChecklistValues('input[name="farming-practice"]'),
       farmingExperience: getValue('farming-experience'),
-      irrigationSource: getRadioValue('irrigation-source'),
+      irrigationSource: getChecklistValues('input[name="irrigation-source"]'),
+      irrigationMethods: getRadioValue('irrigation-method'),
+      // Livestock
       livestock: getChecklistValues('input[name="livestock"]'),
+      livestockQuantity: getValue('livestock-quantity'),
+      // Equipment & Facilities
+      machineries: getChecklistValues('input[name="machinery"]'),
+      godamCount: getValue('godam-count'),
+      godamCapacity: getValue('godam-capacity'),
+      compostFacility: getRadioValue('compost-facility'),
+      processFacility: getRadioValue('process-facility'),
+      otherFacility: getRadioValue('other-facility'),
+      lastChemicalDate: getValue('last-chemical-date'),
+      // Additional
       willingToAdopt: getRadioValue('natural-inputs'),
       trainingRequired: getRadioValue('training-required'),
       localGroupName: getValue('local-group-name'),
-      preferredCroppingSeason: getRadioValue('cropping-season'),
+      preferredCroppingSeason: getChecklistValues('input[name="cropping-season"]'),
       remarks: getValue('remarks-comments'),
       termsAgreement: document.getElementById('terms-agreement')?.checked || false,
-      naturalInputs: getRadioValue('natural-inputs')
+      farmersPledgeConsent: document.getElementById('farmers-pledge-consent')?.checked || false
     };
   }
 
@@ -341,12 +372,19 @@
       { key: 'farmerName', label: 'Farmer Name' },
       { key: 'fatherSpouseName', label: 'Father / Spouse Name' },
       { key: 'contactNumber', label: 'Contact Number' },
+      { key: 'gender', label: 'Gender' },
+      { key: 'category', label: 'Category' },
+      { key: 'farmerAge', label: 'Age' },
+      { key: 'bankName', label: 'Bank Name' },
+      { key: 'bankAccountNumber', label: 'Bank Account Number' },
+      { key: 'bankIfsc', label: 'Bank IFSC Code' },
       { key: 'villagePanchayat', label: 'Village / Panchayat' },
       { key: 'mandalBlock', label: 'Mandal / Block' },
       { key: 'district', label: 'District' },
       { key: 'state', label: 'State' },
       { key: 'totalLand', label: 'Total Land' },
       { key: 'areaNaturalFarming', label: 'Area Under Natural Farming' },
+      { key: 'landOwnership', label: 'Land Ownership' },
       { key: 'sowingDate', label: 'Sowing Date' },
       { key: 'cropTypes', label: 'Crop Types' },
       { key: 'farmingPractice', label: 'Farming Practice' },
@@ -364,6 +402,10 @@
 
     if (!data.termsAgreement) {
       missing.push('Accept the terms and conditions');
+    }
+
+    if (!data.farmersPledgeConsent) {
+      missing.push('Accept the Farmer\'s Pledge');
     }
 
     return missing;
